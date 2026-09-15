@@ -1,0 +1,1022 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anirudh Rajesh, Mechanism Design</title>
+<meta name="description" content="Anirudh Rajesh, mechanical engineering student at UC San Diego. Mechanism design projects: a two axis satellite antenna positioner, RobotX subsystems, an autonomous race car and a robotic arm.">
+<meta property="og:title" content="Anirudh Rajesh, Mechanism Design">
+<meta property="og:description" content="Mechanical engineering portfolio: mechanism design, analysis, and the results I had to retract.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📐</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap">
+
+<style>
+:root{
+  --paper:#DEDEDA; --block:#FFFFFF; --ink:#000000; --ink-2:#2A2A28;
+  --muted:#5E5E5A; --rule:#000000; --hot:#FF4000; --hot-ink:#FFFFFF;
+  --ok:#0B6B34; --bw:3px;
+  --display:'Archivo Black',Impact,'Haettenschweiler',sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,'Courier New',monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#000000; --block:#0D0D0D; --ink:#E8E8E4; --ink-2:#C6C6C1;
+  --muted:#8A8A85; --rule:#E8E8E4; --hot:#FF5A1F; --hot-ink:#000000; --ok:#4FD98A;
+}}
+:root[data-theme="dark"]{
+  --paper:#000000; --block:#0D0D0D; --ink:#E8E8E4; --ink-2:#C6C6C1;
+  --muted:#8A8A85; --rule:#E8E8E4; --hot:#FF5A1F; --hot-ink:#000000; --ok:#4FD98A;
+}
+
+*{box-sizing:border-box;border-radius:0!important}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--mono);font-size:15px;line-height:1.75;-webkit-font-smoothing:antialiased}
+p{margin:0}
+
+.shell{max-width:80rem;margin:0 auto;padding:0 clamp(.6rem,2vw,1.6rem)}
+.grid{display:grid;grid-template-columns:minmax(0,1fr)}
+@media(min-width:66rem){.grid{grid-template-columns:15rem minmax(0,1fr)}}
+
+/* rail */
+.rail{border:var(--bw) solid var(--rule);border-bottom:0;padding:1rem;background:var(--block)}
+@media(min-width:66rem){.rail{position:sticky;top:0;align-self:start;max-height:100vh;overflow-y:auto;border-right:0;border-bottom:var(--bw) solid var(--rule)}}
+.brand{font-family:var(--display);font-size:1.32rem;line-height:1;letter-spacing:-.02em;text-transform:uppercase;background:none;border:0;padding:0;margin:0 0 .3rem;color:var(--ink);cursor:pointer;display:block;text-align:left}
+.brand:hover{color:var(--hot)}
+.brand-sub{font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:1.4rem}
+.rail-h{background:var(--ink);color:var(--paper);font-size:.62rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:.28rem .5rem;margin-bottom:.6rem}
+.rail nav{display:flex;flex-direction:column}
+.rail nav button{font-family:var(--mono);font-size:.715rem;line-height:1.4;text-align:left;background:var(--block);color:var(--ink);border:2px solid var(--rule);border-bottom-width:0;padding:.55rem .5rem;margin:0;cursor:pointer;display:flex;gap:.5rem;align-items:baseline}
+.rail nav button:last-of-type{border-bottom-width:2px}
+.rail nav button:hover{background:var(--hot);color:var(--hot-ink)}
+.rail nav button[aria-current="true"]{background:var(--ink);color:var(--paper)}
+.rail nav .n{font-weight:700;flex:0 0 auto}
+.rail-foot{margin-top:1.4rem;border-top:2px solid var(--rule);padding-top:.8rem;font-size:.655rem;line-height:1.85;color:var(--muted)}
+a{color:var(--hot);text-decoration:underline;text-underline-offset:2px}
+a:hover{background:var(--hot);color:var(--hot-ink);text-decoration:none}
+
+.main{border:var(--bw) solid var(--rule);background:var(--paper)}
+@media(min-width:66rem){.main{border-left-width:0}}
+.view{display:none}
+.view.on{display:block}
+
+.mast{border-bottom:var(--bw) solid var(--rule);padding:clamp(1.4rem,3.4vw,2.6rem) clamp(1rem,2.6vw,2.1rem)}
+h1{font-family:var(--display);text-transform:uppercase;font-size:clamp(1.9rem,6.6vw,4.6rem);line-height:.94;letter-spacing:-.03em;margin:0 0 .9rem;text-wrap:balance}
+.standfirst{font-size:.95rem;line-height:1.7;max-width:58ch;color:var(--ink-2)}
+.mast-strip{display:flex;flex-wrap:wrap;margin-top:1.4rem;border:2px solid var(--rule)}
+.mast-strip div{flex:1 1 10rem;padding:.4rem .6rem;font-size:.65rem;letter-spacing:.09em;text-transform:uppercase;border-right:2px solid var(--rule);color:var(--muted)}
+.mast-strip div:last-child{border-right:0}
+.mast-strip b{display:block;color:var(--ink);font-weight:700;letter-spacing:.04em;text-transform:none;font-size:.72rem}
+
+.bar{background:var(--ink);color:var(--paper);font-size:.66rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;padding:.34rem .6rem;margin:0}
+.bar.hot{background:var(--hot);color:var(--hot-ink)}
+
+.blk{border-bottom:var(--bw) solid var(--rule)}
+.blk .body{padding:clamp(1rem,2.6vw,2.1rem);display:flex;flex-direction:column;gap:1rem}
+.lede{max-width:74ch;color:var(--ink-2);font-size:.905rem;line-height:1.8}
+.lede b{color:var(--ink);font-weight:700}
+.about p{max-width:74ch;color:var(--ink-2);font-size:.905rem;line-height:1.8}
+.about p b{color:var(--ink);font-weight:700}
+.about .body{padding:clamp(1rem,2.6vw,2.1rem);display:flex;flex-direction:column;gap:1rem}
+.about{border-bottom:var(--bw) solid var(--rule)}
+
+h3.sub{font-family:var(--mono);font-size:.79rem;font-weight:700;letter-spacing:.02em;color:var(--ink);margin:.5rem 0 -.3rem;padding-bottom:.35rem;border-bottom:2px solid var(--rule);max-width:74ch}
+
+/* data aside */
+.data{border:2px solid var(--rule);background:var(--block);padding:.7rem .8rem;font-size:.75rem;line-height:1.7;font-variant-numeric:tabular-nums;max-width:74ch}
+.data b{color:var(--hot);font-weight:700}
+.data .cap{display:block;font-size:.63rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:.35rem}
+
+/* decision grid */
+.dec{border:2px solid var(--rule);border-bottom:0;display:grid;grid-template-columns:minmax(0,1fr);max-width:74ch}
+.dec:last-of-type{border-bottom:2px solid var(--rule)}
+@media(min-width:56rem){.dec{grid-template-columns:11rem minmax(0,1fr) 12.5rem;max-width:none}}
+.dq{padding:.55rem .6rem;background:var(--block);font-size:.72rem;font-weight:700;line-height:1.45;border-bottom:2px solid var(--rule)}
+@media(min-width:56rem){.dq{border-bottom:0;border-right:2px solid var(--rule)}}
+.dq .st{display:block;margin-top:.3rem;font-weight:700;font-size:.59rem;letter-spacing:.11em;text-transform:uppercase;padding:.08rem .3rem}
+.st.b{background:var(--ok);color:#FFF}
+.st.c{background:var(--hot);color:var(--hot-ink)}
+.dbody{padding:.65rem;display:flex;flex-direction:column;gap:.55rem;border-bottom:2px solid var(--rule)}
+@media(min-width:56rem){.dbody{border-bottom:0;border-right:2px solid var(--rule)}}
+.dbody p{font-size:.855rem;line-height:1.72;color:var(--ink-2);max-width:56ch}
+.chose{background:var(--ink);color:var(--paper);padding:0 .2em;font-weight:700}
+.rej{color:var(--muted);text-decoration:line-through;text-decoration-thickness:2px}
+.dfig{padding:.65rem;font-size:.72rem;line-height:1.6;font-variant-numeric:tabular-nums;color:var(--ink);background:var(--block)}
+.dfig b{color:var(--hot);font-weight:700}
+
+/* design evolution */
+.evo-list{display:flex;flex-direction:column}
+.evo{border:2px solid var(--rule);border-bottom:0;display:grid;grid-template-columns:minmax(0,1fr)}
+.evo:last-child{border-bottom:2px solid var(--rule)}
+@media(min-width:56rem){.evo{grid-template-columns:7.5rem 17rem minmax(0,1fr)}}
+.evo-n{padding:.55rem .6rem;background:var(--block);font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--rule)}
+.evo-n span{display:block;font-family:var(--display);font-size:2rem;line-height:.9;letter-spacing:0;color:var(--hot);margin-bottom:.3rem}
+.evo.now .evo-n{background:var(--ink);color:var(--paper)}
+@media(min-width:56rem){.evo-n{border-bottom:0;border-right:2px solid var(--rule)}}
+.evo-img{margin:0;aspect-ratio:4/3;max-width:100%;display:flex;align-items:center;justify-content:center;text-align:center;padding:.6rem;border-bottom:2px solid var(--rule);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);background:repeating-linear-gradient(45deg,transparent 0 9px,rgba(127,127,127,.14) 9px 10px)}
+@media(min-width:56rem){.evo-img{border-bottom:0;border-right:2px solid var(--rule);aspect-ratio:auto;min-height:12rem}}
+.evo-img img{width:100%;height:100%;object-fit:cover;display:block}
+.evo-body{padding:.65rem .75rem;display:flex;flex-direction:column;gap:.5rem}
+.evo-body p{font-size:.855rem;line-height:1.72;color:var(--ink-2);max-width:60ch}
+.evo-body .evo-t{font-family:var(--display);text-transform:uppercase;font-size:1rem;line-height:1.1;letter-spacing:-.01em;color:var(--ink)}
+.evo-body .evo-why{border-top:2px solid var(--rule);padding-top:.5rem}
+.evo-why b{color:var(--hot);font-weight:700}
+
+.spec{width:100%;border-collapse:collapse;font-size:.8rem;border:2px solid var(--rule);max-width:74ch}
+.spec th,.spec td{text-align:left;padding:.42rem .6rem;border:2px solid var(--rule);vertical-align:top}
+.spec th{font-weight:700;color:var(--ink);background:var(--block)}
+.spec td{color:var(--ink-2);font-variant-numeric:tabular-nums}
+.spec td b{color:var(--hot);font-weight:700}
+.scroller{overflow-x:auto}
+
+/* index list */
+.plist{display:flex;flex-direction:column}
+.pitem{display:grid;grid-template-columns:minmax(0,1fr);gap:.7rem;padding:clamp(1rem,2.6vw,1.8rem);border-bottom:var(--bw) solid var(--rule);background:var(--paper);border-left:0;border-right:0;border-top:0;text-align:left;font:inherit;color:inherit;cursor:pointer;width:100%}
+@media(min-width:52rem){.pitem{grid-template-columns:4.2rem minmax(0,1fr) 15rem;gap:0 1.4rem;align-items:start}}
+.pitem:hover{background:var(--block)}
+.pitem:hover .pt{color:var(--hot)}
+.pnum{font-family:var(--display);font-size:2rem;line-height:.85;color:var(--hot)}
+.pt{font-family:var(--display);text-transform:uppercase;font-size:clamp(1.05rem,2.4vw,1.5rem);line-height:1.05;letter-spacing:-.018em;margin:0 0 .4rem;color:var(--ink)}
+.pmeta{font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.55rem}
+.pdesc{font-size:.875rem;line-height:1.72;color:var(--ink-2);max-width:60ch}
+.pgo{margin-top:.7rem;font-size:.65rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--hot)}
+.pfig{border:2px solid var(--rule);padding:.5rem .6rem;font-size:.7rem;line-height:1.62;font-variant-numeric:tabular-nums;background:var(--block)}
+@media(max-width:51.99rem){.pfig{margin-top:.3rem}}
+
+.back{font-family:var(--mono);font-size:.66rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;background:var(--ink);color:var(--paper);border:0;cursor:pointer;padding:.4rem .7rem;margin:0}
+.back:hover{background:var(--hot);color:var(--hot-ink)}
+.phead{border-bottom:var(--bw) solid var(--rule);padding:clamp(1rem,2.6vw,2.1rem)}
+.phead h2{font-family:var(--display);text-transform:uppercase;font-size:clamp(1.6rem,5.2vw,3.4rem);line-height:.94;letter-spacing:-.028em;margin:.9rem 0 .7rem;text-wrap:balance}
+.psub{font-size:.7rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.psub b{color:var(--ink);font-weight:700}
+.tags{display:flex;flex-wrap:wrap;margin:1rem 0 0;padding:0;list-style:none;border:2px solid var(--rule);border-right:0;border-bottom:0}
+.tag{font-size:.63rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .55rem;border-right:2px solid var(--rule);border-bottom:2px solid var(--rule);color:var(--muted);white-space:nowrap}
+.tag.built{background:var(--ok);color:#FFF;font-weight:700}
+.tag.cad{background:var(--hot);color:var(--hot-ink);font-weight:700}
+
+.foot{padding:clamp(1rem,2.6vw,1.8rem);font-size:.66rem;line-height:1.8;color:var(--muted)}
+button:focus-visible,a:focus-visible{outline:3px solid var(--hot);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+img{max-width:100%}
+</style>
+</head>
+<body>
+
+<div class="shell">
+<div class="grid">
+
+  <aside class="rail">
+    <button class="brand" data-go="index">Anirudh<br>Rajesh</button>
+    <p class="brand-sub">Mechanical Engineer</p>
+    <p class="rail-h">Projects</p>
+    <nav id="nav">
+      <button data-go="xy"><span class="n">01</span><span>X&ndash;Y Antenna Positioner</span></button>
+      <button data-go="robotx"><span class="n">02</span><span>RobotX 2026</span></button>
+      <button data-go="car"><span class="n">03</span><span>Autonomous Race Vehicle</span></button>
+      <button data-go="arm"><span class="n">04</span><span>Robotic Arm / MAE 3</span></button>
+      <button data-go="amani"><span class="n">05</span><span>Amani / Memory System</span></button>
+    </nav>
+    <div class="rail-foot">
+      UC SAN DIEGO<br>B.S. MECHANICAL ENG.<br>JUNE 2027<br>SAN DIEGO, CA<br><br>
+      <a href="mailto:arajesh@ucsd.edu">arajesh@ucsd.edu</a><br>
+      <a href="https://linkedin.com/in/anirudhrajesh23">linkedin</a>
+    </div>
+  </aside>
+
+  <main class="main">
+
+  <!-- ================= INDEX ================= -->
+  <div class="view on" id="v-index">
+    <div class="mast">
+      <h1>Hey, I'm Anirudh Rajesh.</h1>
+      <p class="standfirst">I am a Mechanical Engineering student at UC San Diego. I design mechanisms that have to hold their position while something works against them, and I like the part of the job where you find out the obvious answer was wrong.</p>
+      <div class="mast-strip">
+        <div>Discipline<b>Mechanical</b></div>
+        <div>Focus<b>Mechanism design</b></div>
+        <div>Graduating<b>June 2027</b></div>
+      </div>
+    </div>
+
+    <section class="about">
+      <p class="bar">About</p>
+      <div class="body">
+        <p>I design things that solve problems, then work out whether there is a better way than the first one that works. A gripper driven through a self-locking worm, so it holds at zero current and survives a power loss mid-flight. A fork stiffened until the gearbox became the softer spring, the point past which more metal buys about one hertz. A test vessel made from a bodyboard, because the problem was not how to test an autonomy stack but how to test it somewhere failure was cheap.</p>
+        <p>None of those cost more than the obvious answer. <b>The better option is usually available, it is just one question further in.</b></p>
+        <p>Better is a claim, so I spend nearly as much time checking my own work as designing it. Several projects below include a result I later retracted. I have left those in.</p>
+      </div>
+    </section>
+
+    <p class="bar hot">Projects</p>
+    <div class="plist">
+
+      <button class="pitem" data-go="xy">
+        <span class="pnum">01</span>
+        <span>
+          <span class="pt">X&ndash;Y Satellite Antenna Positioner</span>
+          <span class="pmeta">1.35 m Ka-band pedestal / sole mechanism designer / 2026</span>
+          <span class="pdesc">A two-axis mount that carries a 1.35 m dish and has to hold it within a tenth of a degree while the wind pushes on it. No error allocation had been issued for the mechanism, so the first thing I had to produce was the requirement itself.</span>
+          <span class="pgo">Read &rarr;</span>
+        </span>
+        <span class="pfig">0.1&deg; POINTING BUDGET<br>12-ROW RSS ALLOCATION<br>FORK MODE 20 &rarr; 73 Hz</span>
+      </button>
+
+      <button class="pitem" data-go="robotx">
+        <span class="pnum">02</span>
+        <span>
+          <span class="pt">Maritime RobotX Challenge 2026</span>
+          <span class="pmeta">Team Inspiration / mechanical + autonomy / June to August 2026</span>
+          <span class="pdesc">Subsystems for an unmanned surface vessel and its UAV, each designed against a published international specification, plus a bodyboard test vessel we built so the autonomy stack could be brought up somewhere a failure was cheap.</span>
+          <span class="pgo">Read &rarr;</span>
+        </span>
+        <span class="pfig">4 SUBSYSTEMS<br>3 BUILT, 1 CAD ONLY<br>AUTONOMOUS WAYPOINTS</span>
+      </button>
+
+      <button class="pitem" data-go="car">
+        <span class="pnum">03</span>
+        <span>
+          <span class="pt">Autonomous Racing Vehicle</span>
+          <span class="pmeta">MAE 148 / mechanical design and autonomy / team of four</span>
+          <span class="pdesc">A 1/10-scale car that had to see a track, find the line and lap it on its own. I designed every mount that holds the electronics to the chassis, then took the car through the ROS2 stack until it drove the track and kept driving.</span>
+          <span class="pgo">Read &rarr;</span>
+        </span>
+        <span class="pfig">3 UNASSISTED LAPS<br>THEN LAPPED INDEFINITELY<br>SOLVED TWO DIFFERENT WAYS</span>
+      </button>
+
+      <button class="pitem" data-go="arm">
+        <span class="pnum">04</span>
+        <span>
+          <span class="pt">Ring-Stacking Robotic Arm</span>
+          <span class="pmeta">MAE 3 / team lead / claw subsystem and full-arm CAD</span>
+          <span class="pdesc">A stationary arm built to pick rings and place them on a central statue, under a hard limit of six motors and two sheets of acrylic. The gear ratio ended up being decided by packaging rather than by torque, which I did not expect.</span>
+          <span class="pgo">Read &rarr;</span>
+        </span>
+        <span class="pfig">4 OF 6 MOTORS USED<br>3:1 RATIO<br>FOS 64 ON THE JAW</span>
+      </button>
+
+      <button class="pitem" data-go="amani">
+        <span class="pnum">05</span>
+        <span>
+          <span class="pt">Amani, an Engineering Memory System</span>
+          <span class="pmeta">Personal knowledge system / architecture and benchmarking / 2026</span>
+          <span class="pdesc">A memory layer for my own engineering work, so a figure I corrected six weeks ago does not come back to me as fact. Ten weeks of rewrites, each settled by measuring rather than arguing, including five retrieval architectures benchmarked blind against each other.</span>
+          <span class="pgo">Read &rarr;</span>
+        </span>
+        <span class="pfig">249 PAGES / 378 SESSIONS<br>5 ARCHITECTURES MEASURED<br>4.1&times; CHEAPER, NO WORSE</span>
+      </button>
+
+    </div>
+
+    <p class="foot">ANIRUDH RAJESH / SAN DIEGO, CA / <a href="mailto:arajesh@ucsd.edu">arajesh@ucsd.edu</a><br>
+    FIGURES SHOWN ARE MY OWN DERIVATIONS. PROGRAMME-SUPPLIED SPECIFICATIONS AND VENDOR PART DATA ARE DELIBERATELY OMITTED.</p>
+  </div>
+
+  <!-- ================= XY ================= -->
+  <div class="view" id="v-xy">
+    <div class="phead">
+      <button class="back" data-go="index">&larr; Projects</button>
+      <h2>X&ndash;Y Satellite Antenna Positioner</h2>
+      <p class="psub">1.35 m Ka-band tracking pedestal / <b>sole mechanism designer</b> / July 2026 to present</p>
+      <ul class="tags">
+        <li class="tag cad">CAD and analysis</li><li class="tag">Fusion 360</li>
+        <li class="tag">Error budgeting</li><li class="tag">Drivetrain sizing</li>
+        <li class="tag">Modal FEA</li><li class="tag">Trade studies</li><li class="tag">Supplier engagement</li>
+      </ul>
+    </div>
+
+    <section class="blk">
+      <p class="bar">Introduction</p>
+      <div class="body">
+        <p class="lede">An X&ndash;Y pedestal moves a dish to follow a satellite across the sky. The common azimuth over elevation layout has a singularity overhead, so a fast satellite near zenith forces the mount to whip through it. An X&ndash;Y mount does not, which is why it suits low orbits.</p>
+        <p class="lede">My scope is the mechanism: structure, bearings, drivetrain, balance and load path. The reflector, RF hardware and tracking software belong to other people, so to me the payload is a mass, a CG and a mounting interface. Nothing is built yet; this is CAD, analysis and supplier correspondence.</p>
+      </div>
+    </section>
+
+    <section class="blk">
+      <p class="bar">The Pointing Requirement</p>
+      <div class="body">
+        <p class="lede">The requirement is defined by signal loss rather than angle, which is what sets the number. Total pointing error has to cost less than half a decibel at the highest transmit frequency, and working that backwards gives 0.1 degrees. It scales with aperture, since a larger dish has a narrower beam and gets a tighter budget.</p>
+        <p class="lede">Travel is &plusmn;180 degrees on both axes, ideally with no mechanical limit. Ground slope at a deployment site cannot be predicted, so the margin has to be in the machine rather than assumed away.</p>
+        <div class="data"><span class="cap">Requirement chain</span>
+          Beamwidth &asymp; 70&thinsp;&lambda;/D &rarr; <b>0.50&deg;</b> at Ka band on 1.35 m<br>
+          Loss &asymp; 12&thinsp;(&Delta;&theta;/&theta;<sub>3dB</sub>)&sup2; &rarr; <b>0.48 dB</b> at 0.1&deg;<br>
+          Travel: <b>&plusmn;180&deg;</b> both axes, not mechanically limited
+        </div>
+      </div>
+    </section>
+
+    <section class="blk">
+      <p class="bar hot">How the Design Got Here</p>
+      <div class="body">
+        <p class="lede">Four versions, and each change came from learning something the version before it had not accounted for. Read top to bottom, it is mostly the story of one dimension, the distance between the two axes, getting smaller for reasons that were not the ones I started with.</p>
+        <div class="evo-list">
+
+          <div class="evo">
+            <div class="evo-n"><span>01</span>August</div>
+            <figure class="evo-img" role="img" aria-label="First assembly, image to come">Image to come<br>First assembly</figure>
+            <div class="evo-body">
+              <p class="evo-t">Fork, trunnions, axes 800 mm apart</p>
+              <p>A fork and yoke, chosen over a ring because the travel requirement rules out anything that encloses the dish. Trunnion shafts ran along the upper axis behind the dish, and both axes were supported at both ends. The axes sat 800 mm apart, a figure I had taken as a clearance floor from the dish's own sweep radius.</p>
+              <p class="evo-why"><b>What changed it:</b> I drew the full swept volume in CAD. Nothing interfered at 365 mm, so the floor had never been real.</p>
+            </div>
+          </div>
+
+          <div class="evo">
+            <div class="evo-n"><span>02</span>Early September</div>
+            <figure class="evo-img" role="img" aria-label="Pedestal version, image to come">Image to come<br>Pedestal version</figure>
+            <div class="evo-body">
+              <p class="evo-t">Pedestal, 365 mm offset</p>
+              <p>With the floor gone the offset came down to 365 mm and the machine got about 430 mm shorter. The upper axis should sit at the payload's centre of mass so the dish balances about it, but that station is where the feed horn lives, so the dish was stood off on a pedestal to clear it.</p>
+              <p class="evo-why"><b>What changed it:</b> the upper axis no longer passed through the centre of mass, so its drive carried a standing gravity load before any wind blew.</p>
+            </div>
+          </div>
+
+          <div class="evo">
+            <div class="evo-n"><span>03</span>September 8</div>
+            <figure class="evo-img" role="img" aria-label="Centre of mass version, image to come">Image to come<br>Centre of mass version</figure>
+            <div class="evo-body">
+              <p class="evo-t">Upper axis on the centre of mass</p>
+              <p>The direct fix was to bring the upper axis forward onto the centre of mass, with a cavity in the backing ring so the feed could nest inside it. That balanced the upper axis completely. I built the variants alongside the pedestal and compared them side by side.</p>
+              <p class="evo-why"><b>What changed it:</b> keeping the dish clear of the lower drive forced the offset well beyond the pedestal's, and the machine got taller. Balancing one axis cost the dimension that matters most, so it was rejected.</p>
+            </div>
+          </div>
+
+          <div class="evo now">
+            <div class="evo-n"><span>04</span>September 10 to now</div>
+            <figure class="evo-img" role="img" aria-label="Current design, image to come">Image to come<br>Current design</figure>
+            <div class="evo-body">
+              <p class="evo-t">No trunnions, 250 mm offset</p>
+              <p>A larger offset was mechanically fine. The cost was in control: the upper assembly swings about the lower axis on that offset, so every extra millimetre adds inertia, and any imbalance on the upper axis turns lower axis motion into torque on the upper one in proportion to it. A smaller offset keeps the two closer to independent loops and pushes the drive's resonance higher, at the price of inertia that had been rejecting wind for free.</p>
+              <p>So the redesign went after the offset directly. The trunnion shafts are gone and the fork carries the dish, the lower drive turns a flat plate the upper axis sits on, the backing ring is my own design at 4.2 kg, and the far side of the upper axis floats. The offset is 250 mm. It is not the lever arm the wind acts through, which runs from the lower axis to the dish and still sets the drivetrain load.</p>
+              <p class="evo-why"><b>Still moving:</b> the fork has gone from 20 to 73 Hz, and the mass properties of this build come next.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="blk">
+      <p class="bar">Building the Error Budget</p>
+      <div class="body">
+        <p class="lede">No allocation had been issued telling me how much of that tenth of a degree the mechanism could consume, so I wrote it myself: a twelve row RSS error budget taking half the system total, with the bottom up sum closing inside it. I did not assume every row root sum squares, since that is only valid for independent zero mean errors. Gravity sag and steady wind act through the same compliance in the same direction and add linearly, and taking the pessimistic reading of every correlated pair busts the budget by about 1.6 times.</p>
+        <p class="lede">Three results came out of it I had not expected, and each changed what I worked on next.</p>
+        <div class="data"><span class="cap">What the budget showed</span>
+          <b>78%</b> of pointing error enters downstream of the encoder, so no loop gain reaches it<br>
+          Control touches <b>1/5</b> of total variance. A flawless controller buys a few mdeg; stiffness is a <b>4&times;</b> larger lever<br>
+          Velocity feedforward is mandatory. On feedback alone, tracking lag eats the <b>entire</b> budget from one row<br>
+          Row inverted to a hardware spec: <b>0.28 mm</b> max rim deflection at the design wind case
+        </div>
+        <p class="lede">Checking that stiffness target against a standard aluminium box section showed roughly twice the second moment of area needed, which told me the structural risk sits in the bearings and joints rather than the beams.</p>
+      </div>
+    </section>
+
+    <section class="blk">
+      <p class="bar">Drivetrain Sizing</p>
+      <div class="body">
+        <p class="lede">Before any hardware was bought I checked whether the specified drive could hold the machine still at the design wind case. It cannot, and reaching a number I trust took two corrections.</p>
+        <p class="lede">The first estimate imported a wind torque figure I had been given. Tracing it back showed it already contained the weight of the machine it was measured on, and I was adding our own gravity on top, so weight was counted twice. I stopped importing torque at all. The load is now the CFD force on the dish, which a drag and lift solve cannot contaminate with weight, multiplied by our own measured lever arm.</p>
+        <p class="lede">The second was a pose the machine cannot occupy. The old sum added the worst force, with the dish face on, to the worst torque at a different angle. Summing each angle with itself and taking the worst removed that conservatism.</p>
+        <p class="lede">Neither correction saved the drive. The gearbox survives the design case at about 90 percent of its rating, but the drive behind it delivers well short of the hold, and aerospace practice asks for a 2:1 torque margin on top. The drive offers about a third of that. A larger gearbox frame does not fix it: output torque is motor torque times ratio times efficiency, frame size appears nowhere in that product, and the larger frame carries the same ratio ceiling. A larger motor closes the gap, and a direct drive torque motor is the alternative I have not evaluated yet.</p>
+        <p class="lede">The simulation did not catch any of this. The saturation check was inert and a later audit showed no code path read the drivetrain torque figures at all, so I found it on paper. The rule I took from it: before analysing how well a controller rejects a disturbance, check the actuator can hold the disturbance at all.</p>
+        <div class="data"><span class="cap">Static hold, lower axis, measured lever arm</span>
+          Required at design wind case: <b>372 N-m</b><br>
+          Delivered at ratio ceiling: <b>257 N-m</b><br>
+          Required with 2:1 margin: <b>744 N-m</b> &rarr; about <b>1/3</b> delivered<br>
+          Gearbox rating used: <b>~90%</b>, and over rating at the higher wind case
+        </div>
+      </div>
+    </section>
+
+    <section class="blk">
+      <p class="bar">Mass Properties</p>
+      <div class="body">
+        <p class="lede">I built the payload mass model in Fusion 360 and checked the CG two independent ways rather than trusting one: a direct mass weighted summation over the bodies, then a back derivation from the assembly inertia tensor by parallel axis. They agree to half a millimetre.</p>
+        <p class="lede">That check found what earlier calculations had missed. Every previous balance calculation was one dimensional, justified by left to right symmetry, but symmetry only constrains one transverse axis and nobody had checked the other. A heavy component off the centreline breaks it, giving a 20.2 mm offset. The balance point also turned out far more sensitive to geometry than mass: feed and OMT mass across its range moves the axis about 8 mm, while swapping the optics moves it around 182 mm. That factor of twenty reversed which question I asked the programme first.</p>
+        <p class="lede">The payload has changed once since. I replaced the backing frame with my own design and the payload dropped 4.83 kg. The old frame was budgeted at 9 kg and mine weighs 4.2, so the drop matches to 0.03 kg, which is how I know nothing else in the model moved.</p>
+      </div>
+    </section>
+
+    <section class="blk">
+      <p class="bar hot">Key Decisions</p>
+      <div class="body">
+
+        <div class="dec">
+          <div class="dq">Axis topology</div>
+          <div class="dbody">
+            <p>Chose a <span class="chose">fork and yoke</span> over a <span class="rej">ring and cradle</span>. The travel spec drove it. A ring encloses the dish, so it cannot permit a full flip without absurd oversizing, and "ideally not mechanically limited" rules it out entirely. The fork's open geometry gives unrestricted travel at no structural cost, and its CG imbalance is bounded work rather than a reason to reconsider.</p>
+          </div>
+          <div class="dfig"><b>&plusmn;180&deg;</b> BOTH AXES<br>FORK SPAN MUST<br>EXCEED THE DISH</div>
+        </div>
+
+        <div class="dec">
+          <div class="dq">Gravity balance</div>
+          <div class="dbody">
+            <p>Chose an <span class="chose">adjustable counterweight</span> over a <span class="rej">zero length spring counterbalance</span>. The spring is genuinely elegant, matching gravity exactly at every elevation angle and saving roughly 30 percent of machine mass. Three costs killed it: it halves axis inertia, it turns a static base load into a fully reversing one, and it stores over a kilojoule in a machine serviced outdoors by hand.</p>
+          </div>
+          <div class="dfig">SPRING: <b>&minus;30%</b> MASS<br><b>+39&ndash;50%</b> BANDWIDTH<br>FULLY REVERSING LOAD<br><b>&asymp;1.2 kJ</b> STORED</div>
+        </div>
+
+        <div class="dec">
+          <div class="dq">Counterweight geometry</div>
+          <div class="dbody">
+            <p>The balance requirement fixes a <span class="chose">product</span>, mass multiplied by arm length, so the arm length is free. Mass falls as one over distance while its contribution to inertia rises linearly, meaning a longer arm helps twice: it halves the counterweight and reduces the stiffness the axis needs. The catch came with the redesign: a shorter machine leaves less room to swing the counterweight, so arm length became a trade against ground clearance rather than a free win.</p>
+          </div>
+          <div class="dfig"><b>m &times; d</b> FIXED<br><b>d</b> FREE<br>HALVES MASS AND<br>CUTS STIFFNESS DEMAND</div>
+        </div>
+
+        <div class="dec">
+          <div class="dq">Upper axis support</div>
+          <div class="dbody">
+            <p>The fork sits in slots on both sides of the upper drive, so the axis is supported at both ends rather than cantilevered. The driven side is located by <span class="chose">the gearbox's own main bearing</span>, which already fixes the axis angle by itself. A <span class="rej">second rigid bearing</span> on the far side would over constrain it, fighting that alignment and binding as the structure grows with temperature.</p>
+            <p>So the far side <span class="chose">floats</span>: self aligning, free to slide axially, and with zero radial play, because any clearance there lets the dish tip where the encoder cannot see it. That bearing is not selected yet. The failure mode I worry about is duty rather than load, since a tracker spends its life dithering through tiny angles on the same rolling elements.</p>
+          </div>
+          <div class="dfig">LOCATE ONE END<br>FLOAT THE OTHER<br>ZERO RADIAL PLAY</div>
+        </div>
+
+        <div class="dec">
+          <div class="dq">Structural section</div>
+          <div class="dbody">
+            <p>Chose a <span class="chose">hollow box with ribs</span> over a <span class="rej">three dimensional lattice</span>. A lattice looks efficient until you remember these are bending members, and bending stress lives at the extreme fibre, so interior material is along for the ride. The limit on shelling it out further is local buckling and panel drumming rather than strength.</p>
+          </div>
+          <div class="dfig">LIMIT IS BUCKLING<br>AND PANEL DRUMMING,<br>NOT STRENGTH</div>
+        </div>
+
+        <div class="dec">
+          <div class="dq">Sealing</div>
+          <div class="dbody">
+            <p>Two rejections before it converged. A <span class="rej">fabric boot</span> went first, on field evidence that they tear and trap water. <span class="rej">Spring returned metal petals</span> went second for a better reason: ice and grit jam them, turning a protection failure into a functional one, and a cover that can stop the machine is worse than no cover. Settled on a <span class="chose">rigid impact rated shroud with a non contact labyrinth seal</span>.</p>
+          </div>
+          <div class="dfig">REJECTED: FABRIC BOOT<br>REJECTED: SPRING PETALS<br>(JAMMING RISK)</div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="blk">
+      <p class="bar">Structure and Modes</p>
+      <div class="body">
+        <p class="lede">The acceptance test is the first mode that tips the dish, not the first mode anywhere. A lug or panel ringing on its own does not move the beam. The target comes from the control side, about three times the upper axis velocity loop, which puts it between roughly 60 and 80 Hz depending on how the upper axis is counterweighted.</p>
+        <p class="lede">The first grounded run of the whole load path put that mode at 20 Hz, a factor of four short. I stiffened the fork over several iterations to 73 Hz. At 60 Hz, a diagnostic run with the base clamped showed about 87 percent of the remaining compliance sat in the legs and top, which told me where the next change belonged.</p>
+        <p class="lede">Then the result that changes what is worth doing next. The gearbox is also a spring, and its torsional stiffness sits in series with the fork. By 73 Hz it had become the softer of the two, so the system mode is set mostly by the drive, and further stiffening of the fork buys about one hertz. The real inertia can only push the drive mode lower, so the conclusion holds while the number waits on the new mass properties.</p>
+        <p class="lede">73 Hz is also a ceiling. The model bonds every contact, which makes bolted corners perfectly rigid, and the gearbox compliance is not in the FEA at all.</p>
+        <div class="data"><span class="cap">Fork first mode, by iteration</span>
+          First grounded run: <b>20 Hz</b><br>
+          After fork changes: <b>44 &rarr; 60 &rarr; 73 Hz</b><br>
+          Compliance in legs and top at 60 Hz: <b>~87%</b><br>
+          Target: <b>3&times;</b> upper axis velocity loop, <b>~60&ndash;80 Hz</b>
+        </div>
+        <h3 class="sub">Two runs that looked like answers</h3>
+        <p class="lede">One early run returned 784 Hz. Nothing heavy was attached and single lugs were ringing on their own; frequencies arriving in near identical pairs were the tell. In another, a change had disconnected the dish and a 157 Hz mode looked like the answer, but it was the empty machine. A modal frequency means nothing until you have looked at its mode shape.</p>
+      </div>
+    </section>
+
+    <section class="blk">
+      <p class="bar hot">Two Results I Had to Retract</p>
+      <div class="body">
+        <h3 class="sub">A bandwidth figure that was a solver artifact</h3>
+        <p class="lede">I closed out a disputed control bandwidth figure and got agreement with the published number to within a third of a percent. A match that clean made me suspicious, so I refined the solver grid, and the value drifted monotonically away as the grid got finer. The agreement was a quantisation artifact: the pipeline scans candidate points and takes the first that passes rather than solving for the crossing. I reverted my own published closure and re-derived it by bisection, which reproduced an earlier outside audit exactly.</p>
+
+        <h3 class="sub">A stability limit that was wrong by two orders of magnitude</h3>
+        <p class="lede">Every control loop had been designed against the wrong transfer function. The loop closes on what the encoder reads, and with a load side encoder the structural compliance sits downstream of both actuator and sensor, making it collocated and benign rather than a stability hazard. Correcting it moved the stability limit by about 200 times.</p>
+        <p class="lede">That correction had a consequence I did not want and propagated anyway: with collocation accounted for, a single mode model imposes no bandwidth limit at all, so it cannot determine the stiffness requirement, and the first mode figure the project had been quoting was convention rather than output.</p>
+      </div>
+    </section>
+
+    <section class="blk">
+      <p class="bar">Current Status</p>
+      <div class="body">
+        <p class="lede">Nothing is fabricated and there is no test data. The machine was redesigned in September around the smaller axis offset. The drivetrain and structural figures above use that build's measured geometry; the error budget and the mass model predate it. Still open: mass properties for the new build, which set both axis inertias and every bandwidth figure downstream; the drive, which needs a larger motor and an outdoor rating the current gearbox's catalogue explicitly excludes; and the counterweights, which are not yet drawn.</p>
+        <p class="lede">A configuration audit also found most analysis parameters were inert, set in the config and read by nothing. A parameter you believe you are setting, that nothing consumes, is a silent wrong answer rather than an unused option.</p>
+      </div>
+    </section>
+
+    <p class="foot">FIGURES SHOWN ARE MY OWN DERIVATIONS. PROGRAMME-SUPPLIED SPECIFICATIONS, WIND DATA AND VENDOR PART NUMBERS ARE DELIBERATELY OMITTED.</p>
+  </div>
+
+  <!-- ================= ROBOTX ================= -->
+  <div class="view" id="v-robotx">
+    <div class="phead">
+      <button class="back" data-go="index">&larr; Projects</button>
+      <h2>Maritime RobotX Challenge 2026</h2>
+      <p class="psub">Team Inspiration / <b>mechanical and autonomy subsystems</b> / June to August 2026</p>
+      <ul class="tags">
+        <li class="tag built">3 built, 1 CAD only</li><li class="tag">Mechanism design</li>
+        <li class="tag">Design for additive</li><li class="tag">Fluid delivery</li>
+        <li class="tag">Vehicle bring-up</li><li class="tag">Embedded</li>
+      </ul>
+    </div>
+
+    <section class="blk">
+      <p class="bar">Introduction</p>
+      <div class="body">
+        <p class="lede">RobotX is an international competition in which an unmanned surface vessel, an underwater vehicle and a UAV have to cooperate as one system to complete storm response tasks. The 2026 edition is the first that requires all three domains working together rather than independently.</p>
+        <p class="lede">What makes it useful as engineering practice is that the requirements are published, dimensioned and written by somebody else. Payload masses, target sizes, signalling states and visibility distances are all specified in a rulebook I did not write, which is about as close as a student project gets to having a customer.</p>
+        <p class="lede">I worked on four subsystems. Three of them were built.</p>
+      </div>
+    </section>
+
+    <section class="blk">
+      <p class="bar">The Test Vessel</p>
+      <div class="body">
+        <p class="lede">Before the autonomy work could go on the competition boat we needed somewhere to bring the stack up where a failure cost us nothing important, so we built one out of a bodyboard with four thrusters. It floats, it is roughly the right scale, and nothing on it is precious.</p>
+        <p class="lede">It runs ArduRover on a Pixhawk, which is the rover and boat firmware variant rather than the copter one, because a surface vessel's control problem is not a multirotor's, with a Raspberry Pi alongside as the mission computer. It completed autonomous waypoint missions on the water.</p>
+        <p class="lede">To be clear about who did what: a teammate configured the Raspberry Pi and the ArduPilot side. My part was the vehicle itself, meaning the hull, the thrusters and the mounting that packages the flight controller, companion computer and power delivery onto one plate across two revisions, along with the architecture comparison below that the configuration was built on.</p>
+        <p class="lede">One thing this platform exercises that I found genuinely useful is thrust allocation. Four thrusters on a flat hull is more actuators than the degrees of freedom being commanded, so there is a mapping from a desired surge, sway and yaw down to individual thruster outputs. That is exactly the sort of thing you want to have debugged somewhere cheap.</p>
+      </div>
+    </section>
+
+    <section class="blk">
+      <p class="bar hot">Subsystem Decisions</p>
+      <div class="body">
+
+        <div class="dec">
+          <div class="dq">Control architecture<span class="st c">Trade study</span></div>
+          <div class="dbody">
+            <p>The split came from a documented comparison rather than a preference, and the interesting part is that the two candidates fail for different reasons. A <span class="rej">general purpose microcontroller</span> cannot be the flight controller: not enough memory for state estimation, no floating point unit, and a single sequential loop means one slow sensor read stalls everything behind it. A <span class="rej">Linux companion board</span> cannot either, but not for any of those reasons. It has plenty of compute, it is simply not a real time system, so timing jitter at loop rate is unbounded.</p>
+            <p>Because they fail differently the answer is <span class="chose">both, with the work divided</span>. Dedicated flight controller for vehicle control, Linux companion for the mission layer, two failure domains that do not share hardware.</p>
+          </div>
+          <div class="dfig">MCU: NO FPU, NO EKF<br>LINUX: NOT REAL TIME<br>&rarr; SPLIT THE DOMAINS</div>
+        </div>
+
+        <div class="dec">
+          <div class="dq">UAV payload gripper<span class="st c">CAD only</span></div>
+          <div class="dbody">
+            <p>Tasks 2 and 3 need the UAV to retrieve a specific coloured tin from a floating platform and deliver it to a specific coloured circle. The tins are 40 to 50 grams. I designed a four prong gripper driven from <span class="chose">a single servo through a self locking worm</span> rather than <span class="rej">a stalled servo grasp</span>.</p>
+            <p>A conventional gripper holds by commanding a stalled position, so it draws current the whole carry, heats the servo and drops the payload on any brownout. The worm holds at zero current and keeps the payload through complete power loss, which matters when the alternative is dropping it over water during a scored run. The right angle geometry pays off again by letting the servo lie flat along the airframe instead of hanging into the downward camera view, and occlusion of that camera is a documented open problem here.</p>
+            <p>Self locking is a condition rather than a property of worm drives generally. It holds when the lead angle falls below the friction angle for the material pair, which is why the tooth geometry and the choice between a printed and a purchased wheel are the same decision.</p>
+          </div>
+          <div class="dfig">PAYLOAD SPEC <b>40&ndash;50 g</b><br><b>4</b> FINGERS / <b>1</b> ACTUATOR<br><b>0 mA</b> HOLDING CURRENT</div>
+        </div>
+
+        <div class="dec">
+          <div class="dq">Fire suppression nozzle<span class="st b">Built</span></div>
+          <div class="dbody">
+            <p>Task 3 requires the vessel to spray water at a 25 cm target window until it changes colour. I designed and built the converging junction merging two feed lines into a single delivery line, plus the servo mounting module that lets the nozzle be aimed.</p>
+            <p>The aim angle comes from solving the jet's flight <span class="chose">backwards</span>. With a fixed exit velocity and a target at known height and standoff, you solve the projectile relation for the launch angle that lands on it. It is quadratic in tan&thinsp;&theta;, so there are two valid answers, a flat trajectory and a lobbed one. I took the flat one because it is less sensitive to standoff error, and standoff is exactly what a vessel station keeping in chop cannot promise you.</p>
+            <p>I did not model drag, deliberately. Over this standoff the correction on a coherent jet is small compared to the target window and much smaller than the vessel's own position error, which is the term that actually decides where the stream lands. The effort belonged in holding the boat steady.</p>
+          </div>
+          <div class="dfig">TWO FEED LINES &rarr; ONE<br>TARGET WINDOW <b>25 cm</b><br>FLAT ROOT OVER LOBBED</div>
+        </div>
+
+        <div class="dec">
+          <div class="dq">Course light beacon<span class="st b">Built</span></div>
+          <div class="dbody">
+            <p>Built on an ESP32 to the rulebook's 8 by 8 RGB panel specification, serving all five required course states over an HTTP API with the flash cadence exposed as a parameter rather than compiled in. Three enclosures printed.</p>
+            <p>What made it more interesting than it looks is that <span class="chose">two separate sections of the rulebook govern the same hardware</span>. One is the course element specification. The other is the vehicle status light requirement, with its own mandated colours and minimum visibility distances for surface and underwater vehicles. The device has to satisfy both, so the endpoint set is the union of two independent specifications rather than one.</p>
+          </div>
+          <div class="dfig"><b>64</b> LEDs / 8&times;8 PANEL<br><b>5</b> COURSE STATES<br><b>3</b> ENCLOSURES PRINTED</div>
+        </div>
+
+        <div class="dec">
+          <div class="dq">Designing for the printer<span class="st b">Applied throughout</span></div>
+          <div class="dbody">
+            <p>Nothing goes to the printer before an <span class="chose">interference and cross section check</span> on the assembly, run against measured shrinkage rather than nominal dimensions. FDM holes come out undersized from filament squish and thermal contraction, so a part drawn to nominal binds on assembly. Designing to the process rather than to the drawing is most of what makes printed parts fit first time.</p>
+            <p>Where a part printed badly I split it into sections that print well and joined them afterwards, rather than fighting the process with orientation tricks and support.</p>
+          </div>
+          <div class="dfig">CLEARANCE FROM MEASURED<br>SHRINKAGE, NOT NOMINAL<br>SPLIT RATHER THAN FIGHT</div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="blk">
+      <p class="bar">What I Would Check First on the Gripper</p>
+      <div class="body">
+        <p class="lede">It is designed and not built, so I would rather state the weaknesses than have somebody find them.</p>
+        <p class="lede">Self locking worm drives are efficiency poor, typically well under half, so the reduction is bought with heat and needs a larger servo than a spur gear gripper would. Whether that nets out positive depends on carry duration, and I have measured neither side. The mechanism also almost certainly outweighs its payload by a large multiple, which collides with the mass versus flight time tradeoff this vehicle is already constrained by. Mechanism mass as a fraction of all up weight is the first number I would take, even if it is unflattering.</p>
+        <p class="lede">Four rigid fingers is over constrained. Three contact points fully constrain a cylinder, so one finger will not touch in practice, and first contact takes all the load and can walk the payload off centre. A compliant fingertip would conform instead of clamping. And the property that makes it safe under power loss makes it unforgiving under impact: no back drive means no manual release, so a hard landing puts the impact straight into the gear teeth and a jam is unrecoverable in the air.</p>
+      </div>
+    </section>
+
+    <p class="foot">COMPETITION FIGURES ARE DRAWN FROM THE PUBLISHED 2026 RULEBOOK.</p>
+  </div>
+
+  <!-- ================= CAR ================= -->
+  <div class="view" id="v-car">
+    <div class="phead">
+      <button class="back" data-go="index">&larr; Projects</button>
+      <h2>Autonomous Racing Vehicle</h2>
+      <p class="psub">MAE 148, UC San Diego / <b>mechanical design and autonomy</b> / team of four</p>
+      <ul class="tags">
+        <li class="tag built">Lapped indefinitely</li><li class="tag">Onshape</li>
+        <li class="tag">ROS2</li><li class="tag">Computer vision</li>
+        <li class="tag">CNN</li><li class="tag">PID tuning</li>
+      </ul>
+    </div>
+
+    <section class="blk">
+      <p class="bar">Introduction</p>
+      <div class="body">
+        <p class="lede">A team of four built a self driving 1/10 scale RC car over one quarter. My work bridged both halves: designing every mount that holds the electronics to the chassis, then taking the car through the ROS2 stack until it drove the track on its own.</p>
+        <p class="lede">An autonomous vehicle is a stack of dependencies. The vision pipeline only works if the camera sits at the right height and angle, the camera only stays online if its cabling is clean, and none of it matters if components rattle loose on lap one. My role sat exactly on that mechanical to software boundary.</p>
+      </div>
+    </section>
+
+    <section class="blk">
+      <p class="bar">Designing the Mounts</p>
+      <div class="body">
+        <p class="lede">I designed the full set of mounts in Onshape and printed them at the UCSD makerspace: main plate, camera mount with the LiDAR on top, Raspberry Pi and USB hub, DC-DC converter, anti-spark, relay and Arduino, GPS, and start button.</p>
+
+        <div class="dec">
+          <div class="dq">Base plate</div>
+          <div class="dbody">
+            <p>Chose a <span class="chose">breadboard plate on a 1 cm hole grid</span> over a <span class="rej">fixed layout designed around the components</span>. The class moved fast, and components would get moved or swapped as we went, so a fixed layout would have meant reprinting the base every time. The grid let us rearrange the whole car in minutes with a screwdriver.</p>
+            <p>One detail made it work: every hole modelled at 3.5 mm rather than nominal to absorb FDM shrinkage, so M3 screws pass without tapping or forcing. Across a few hundred holes that is the difference between a plate that works and one you fight for an afternoon.</p>
+          </div>
+          <div class="dfig"><b>1 cm</b> HOLE GRID<br><b>3.5 mm</b> FOR M3<br>RELAYOUT IN MINUTES</div>
+        </div>
+
+        <div class="dec">
+          <div class="dq">Camera mount<span class="st c">The one rebuild</span></div>
+          <div class="dbody">
+            <p>Built the tower at a set height with <span class="chose">several screw hole positions for the tilt</span> instead of <span class="rej">a single fixed pose</span>, so we could test angles physically. Too flat and the camera takes in the whole room, burying the yellow markers in noise. Too steep or too low and it sees only the few centimetres ahead of the bumper, starving the controller of look ahead.</p>
+            <p>This was the only mount I had to rebuild. The first version sat too low with a fixed tilt, capturing too much environment and not enough floor. Raising it and steepening the tilt cut out a lot of background noise before the software ever saw it, which is a reminder that the cheapest place to fix a vision problem is often the mechanical design rather than the code.</p>
+          </div>
+          <div class="dfig">ADJUSTABLE TILT HOLES<br>RAISED + STEEPENED<br>ON REBUILD</div>
+        </div>
+
+        <div class="dec">
+          <div class="dq">LiDAR and cabling</div>
+          <div class="dbody">
+            <p>Stacked the LiDAR <span class="chose">on top of the camera tower</span> rather than <span class="rej">giving it its own structure</span>, since that was the highest point and nothing rises into its line of sight to clip the scan.</p>
+            <p>For wiring, bundle the cables with zip ties then choose the best spot on the plate to screw a mount down. The grid did the work again: a mount could go anywhere, so we positioned components to keep cable runs short rather than stretching wires across the chassis.</p>
+          </div>
+          <div class="dfig">HIGHEST POINT<br>NO ADDED STRUCTURE<br>CABLE RUNS SET POSITIONS</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="blk">
+      <p class="bar">Bringing the Car Up in ROS2</p>
+      <div class="body">
+        <p class="lede">The goal was three clean autonomous laps following the track's yellow markers. I followed the course setup procedure, but our parts and software differed from the guide, so a good chunk of the work was diagnosing the gaps.</p>
+        <p class="lede">The whole stack runs in a Docker container on the Pi, which buys reproducibility: every team runs an identical environment and a broken setup is restored by re-pulling rather than reinstalling. The most important habit in the project turned out to be the build step, since ROS2 uses colcon and compiling alone is not enough. Every edit to a config, launch file or node has to be followed by a rebuild and re-source, or ROS2 keeps running the old values.</p>
+
+        <div class="dec">
+          <div class="dq">Foxy versus Jazzy<span class="st c">The main hurdle</span></div>
+          <div class="dbody">
+            <p>The course guide was written for ROS2 Foxy and we were running Jazzy, so packages the guide assumed were baked into the image were not there. I traced it to two missing dependencies: a <b>multicam</b> package the OAK-D Lite needed to publish its stream, and an <b>Ackermann</b> package required to configure the control nodes so the VESC could drive throttle and steering.</p>
+            <p>Knowing which packages were missing, rather than retrying blindly, only came from understanding how the pieces of the stack depend on each other.</p>
+          </div>
+          <div class="dfig">GUIDE: FOXY<br>STACK: JAZZY<br><b>2</b> MISSING PACKAGES<br>FOUND BY DEPENDENCY TRACE</div>
+        </div>
+
+        <div class="dec">
+          <div class="dq">Two hardware failures in software costume</div>
+          <div class="dbody">
+            <p><b>Power.</b> The OAK-D Lite draws more current at peak than the Pi's USB ports comfortably supply, which shows up as the camera randomly dropping out or feeding a black image. That looks exactly like a driver fault and is not one.</p>
+            <p><b>Network isolation.</b> Every ROS2 robot on the same WiFi is visible to every other by default, so your calibration window can be showing another team's camera feed, or your steering commands driving someone else's car. Assigning each team a unique domain ID makes the robots invisible to each other at the network layer with <span class="chose">no code changes at all</span>.</p>
+          </div>
+          <div class="dfig">DROPOUT = CURRENT,<br>NOT DRIVER<br>DOMAIN ID = ISOLATION<br>WITH ZERO CODE</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="blk">
+      <p class="bar">Calibration and Tuning</p>
+      <div class="body">
+        <p class="lede">All calibration was done with the car on the track, so what I tuned matched real conditions rather than a bench approximation. The pipeline converts each frame into HSV and keeps only the pixels inside a tuned window, so yellow markers turn white and everything else turns black. Lab lighting shifted through the day, so this was iterative. The values I landed on diverge from the guide defaults, notably a Hue floor of 13 against a suggested 25, because they were dialled in against our actual track.</p>
+        <div class="scroller">
+          <table class="spec"><tbody>
+            <tr><th>Hue, low / high</th><td><b>13 / 39</b> &nbsp; isolates the yellow band of the colour wheel</td></tr>
+            <tr><th>Saturation, low / high</th><td><b>15 / 255</b> &nbsp; filters washed out, near grey road surface</td></tr>
+            <tr><th>Value, low / high</th><td><b>121 / 255</b> &nbsp; rejects dark shadow regions on the track</td></tr>
+            <tr><th>Erosion / dilation</th><td><b>9 / 2</b> &nbsp; scrubs speckle hard, then restores the real markers</td></tr>
+            <tr><th>Rows to watch / offset</th><td><b>0.47 / 0.04</b> &nbsp; crops the frame to the road immediately ahead</td></tr>
+            <tr><th>Camera centreline</th><td><b>0.30</b> &nbsp; the zero error reference steering is measured against</td></tr>
+          </tbody></table>
+        </div>
+
+        <h3 class="sub">Centreline and PID</h3>
+        <p class="lede">The track guidance is dotted rather than continuous, so the system finds the marker blobs and computes a centreline to steer toward, with the difference from the camera centreline reference becoming the steering error. Tuning the contour filters and the error dead band turns a flickering set of dots into one stable target.</p>
+        <p class="lede">PID is the stage that decides whether a car finishes. Too much proportional gain and it oscillates down the straights, too little and it reacts late and slides off the curves. Throttle is scheduled against error too. I tuned it on the track: adjust, rebuild, launch, watch, repeat.</p>
+        <div class="scroller">
+          <table class="spec"><tbody>
+            <tr><th>Proportional</th><td>0.400 &rarr; <b>0.765</b> &nbsp; nearly doubled, so the car responded firmly to error instead of correcting sluggishly into curves</td></tr>
+            <tr><th>Integral</th><td>0.000 &rarr; <b>0.000</b> &nbsp; left at zero, no persistent one sided drift needed accumulating correction</td></tr>
+            <tr><th>Derivative</th><td>0.100 &rarr; <b>0.162</b> &nbsp; raised to damp the oscillation the higher proportional gain introduced</td></tr>
+          </tbody></table>
+        </div>
+        <p class="lede">Pushing proportional up makes the car more responsive and also more prone to weaving, so derivative had to come up alongside it. The integral staying at exactly zero is itself a result: it means the steering was mechanically well centred and the centreline honestly calibrated, with no systematic bias for an integral term to mop up. A gain I did not need to use told me something about the machine underneath it.</p>
+      </div>
+    </section>
+
+    <section class="blk">
+      <p class="bar">Results</p>
+      <div class="body">
+        <p class="lede">The car completed all three autonomous laps cleanly and then kept going, lapping indefinitely without failing. That endurance was the real proof, because it meant the calibration and tuning were repeatable rather than one lucky run that held together for three laps.</p>
+      </div>
+    </section>
+
+    <section class="blk">
+      <p class="bar hot">Solving It Twice</p>
+      <div class="body">
+        <p class="lede">Earlier in the course we drove the same car with a trained convolutional network instead of a hand built pipeline. That version used roughly 15,000 self collected images, trained on university GPU clusters over a remote session in under ten minutes, and was validated in simulation before it went near the physical car. It demonstrated three autonomous laps publicly at the Del Mar Electronics and Manufacturing Show, in front of industry visitors, on a track it had not seen before that day.</p>
+        <p class="lede">The comparison is what I took away, and it is not that one is better. The network needed data and the pipeline needed understanding: collecting fifteen thousand frames is labour you can do without knowing why the car turns, whereas every parameter in the CV pipeline had to be reasoned about because nothing in it tunes itself. The pipeline also fails legibly, since when lane detection breaks I can watch the mask and know it is a Hue floor or a shadow, while a network driving badly usually means it saw something in training I did not notice.</p>
+        <p class="lede">Choosing for a competition tomorrow, I would take the classical pipeline for anything I have to debug trackside under time pressure, and the learned approach for anything whose rules I cannot write down. Knowing which problem I have is the actual skill, and I only have it because I built both.</p>
+      </div>
+    </section>
+
+    <p class="foot">MAE 148, UC SAN DIEGO. SPRING 2026, TEAM 12.</p>
+  </div>
+
+  <!-- ================= ARM ================= -->
+  <div class="view" id="v-arm">
+    <div class="phead">
+      <button class="back" data-go="index">&larr; Projects</button>
+      <h2>Ring-Stacking Robotic Arm</h2>
+      <p class="psub">MAE 3, UC San Diego / <b>team lead</b> / claw subsystem and full-arm CAD</p>
+      <ul class="tags">
+        <li class="tag built">Built</li><li class="tag">Gear train</li>
+        <li class="tag">Fusion 360</li><li class="tag">AutoCAD</li>
+        <li class="tag">Laser cutting</li><li class="tag">Failure analysis</li>
+      </ul>
+    </div>
+
+    <section class="blk">
+      <p class="bar">Introduction</p>
+      <div class="body">
+        <p class="lede">The objective was to build a robotic system that could pick up rings from a defined region of the arena and place them onto a central statue. As the team lead I first worked with the team to generate concepts and settle on a single design direction. Once the concept was locked I was responsible for the claw subsystem, for modelling the full arm in Fusion 360, and for running simulations in the arena to verify the concept before anything was fabricated. The arm segment sizing itself was owned by other members of the team; I modelled those dimensions in Fusion and focused my own design work on the gripper.</p>
+      </div>
+    </section>
+
+    <section class="blk">
+      <p class="bar">Competition Constraints</p>
+      <div class="body">
+        <p class="lede">Hard material and actuator limits shaped almost every decision that followed. Six motors were permitted, four high torque and two low torque high speed; we used four. Material was rationed to two sheets of acrylic and one of aluminium, nothing else allowed. And the robot had to fit a roughly fifteen inch height limit, which put the arm segments at about seven inches each. Working inside a ration that tight changes what good practice looks like, because you cannot iterate by cutting parts.</p>
+      </div>
+    </section>
+
+    <section class="blk">
+      <p class="bar">Choosing the Concept</p>
+      <div class="body">
+        <div class="dec">
+          <div class="dq">Base topology</div>
+          <div class="dbody">
+            <p>Chose a <span class="chose">stationary arm on a rotating base</span> over a <span class="rej">mobile platform carrying an extended hook</span>. Required reach inside the arena was very limited, so mobility added complexity we did not need, and with the motor budget that tight we wanted every motor on the arm itself. It also cut the error sources the operator had to manage, since they only ever had to think about the arm's own movements.</p>
+          </div>
+          <div class="dfig"><b>4</b> OF <b>6</b> MOTORS USED<br>FULL ARENA COVERAGE<br>ONE REFERENCE FRAME</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="blk">
+      <p class="bar">Simulating Before Cutting</p>
+      <div class="body">
+        <p class="lede">Each part was modelled individually in Fusion 360 then brought into a single assembly, which made it straightforward to check the gear pairings at each joint and verify the claw mesh sat where it needed to before committing to fabrication.</p>
+        <p class="lede">With the assembly complete I placed the arm into a Fusion model of the arena, rings around the perimeter and statue at the centre, to confirm the stationary arm could reach the full layout and that the geometry fit the envelope, all before any material was cut. With acrylic that limited, verifying reach and fit in simulation was the key risk reduction step.</p>
+        <p class="lede">The full operating cycle came out of this as a four pose sequence: rotate the base to line up with a ring, rotate toward the statue, extend the lower arm, and finally turn the claw to drop the ring. That sequence is what justified three arm motors plus a dedicated claw motor.</p>
+      </div>
+    </section>
+
+    <section class="blk">
+      <p class="bar hot">The Claw</p>
+      <div class="body">
+        <div class="dec">
+          <div class="dq">Gripper principle</div>
+          <div class="dbody">
+            <p>Chose <span class="chose">one moving jaw against one fixed jaw</span> over <span class="rej">two moving jaws</span>. At constant torque, driving both halves the gripping force, so keeping one fixed turns it into a rigid support and puts the whole motor output behind the jaw that moves. The ring is held by <b>mechanical entrapment</b> in the cavity between the two arms rather than by squeezing, so holding it costs nothing once closed.</p>
+            <p>Motor off, the claw sits open. Motor on, the moving jaw rotates roughly 45 degrees until it meets the fixed jaw, then holds until the geared motor is driven in reverse to release.</p>
+          </div>
+          <div class="dfig">BOTH JAWS MOVING<br>= HALF THE GRIP FORCE<br>RETENTION BY ENTRAPMENT<br><b>45&deg;</b> CLOSING SWEEP</div>
+        </div>
+
+        <div class="dec">
+          <div class="dq">Motor selection<span class="st b">Found by testing</span></div>
+          <div class="dbody">
+            <p>The first claw used <span class="rej">a high torque motor</span> with sharp edged jaws, and in testing it was wrong twice over: far too sensitive to control, and it kept breaking down. We had no datasheet torque figure for the motors, so with nothing to design against, iterative testing was the only available method rather than laziness.</p>
+            <p>Swapped to the <span class="chose">low torque high speed motor</span>, which gave controllable actuation, and redesigned the jaws with curved rather than sharp edges. The 3:1 gear ratio never changed; only the motor and the geometry did.</p>
+          </div>
+          <div class="dfig">RATIO <b>3:1</b>, UNCHANGED<br>MOTOR SWAPPED<br>NO DATASHEET TORQUE</div>
+        </div>
+
+        <div class="dec">
+          <div class="dq">Fabrication order</div>
+          <div class="dbody">
+            <p>Laser cut every part from <span class="chose">thin wood first</span> to prove the geometry, then re-cut in acrylic for the final build, with the flat parts laid out in AutoCAD. With two sheets of acrylic for the whole robot, a wasted cut is not a delay, it is a part you never get to make, and wood is the cheapest way to find out a hole is in the wrong place.</p>
+          </div>
+          <div class="dfig">WOOD FIRST<br>THEN ACRYLIC<br><b>2</b> SHEETS TOTAL</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="blk">
+      <p class="bar">Claw Analysis</p>
+      <div class="body">
+        <p class="lede">I analysed the claw to check whether the moving arm could retain a ring by entrapment and resist the forces from robot motion, impacts and stacking. Because the claw does not rely on pinching, the analysis focused on two things: whether the inertial force on the ring during acceleration could force the claw open, and the bending stress in the claw arm.</p>
+
+        <h3 class="sub">Can the ring force the claw open</h3>
+        <p class="lede">The gear ratio between the motor and the rotating claw is 3:1, so the stall torque at the arm is three times the motor's stall torque. Taking the worst case, which is the largest force the ring can exert, the arm holds the ring closed as long as that available torque exceeds the ring's inertial force acting at the jaw radius. Substituting the numbers gives a maximum acceleration of about 78 metres per second squared before the ring would force the claw open. That value is very high, which tells us the claw should never be in a position where normal robot motion opens it.</p>
+
+        <h3 class="sub">Will the jaw deform</h3>
+        <p class="lede">I also checked how much load the claw arm could take before deforming, by comparing the bending stress to the yield stress of acrylic. Using a bending model with the ring load applied at the jaw tip, the calculated bending stress came out at approximately 0.94 MPa. Acrylic yields at roughly 60.5 MPa, so the calculated stress is far below that and the claw arm has a large structural margin.</p>
+        <p class="lede">Both of these are hand calculations and both are predictions rather than measurements. To confirm them in the real world, the plan was to apply a gradually increasing force at the tip of the moving arm with a spring scale, perpendicular, to simulate worst case loading, and to run a retention test by shaking and tilting the robot with a ring secured in the cavity to check for back driving or slippage.</p>
+        <div class="data"><span class="cap">Claw analysis summary</span>
+          Gear ratio, motor to claw: <b>3:1</b><br>
+          Max acceleration before the ring opens the claw: <b>&asymp;78 m/s&sup2;</b><br>
+          Calculated bending stress in the jaw: <b>&asymp;0.94 MPa</b><br>
+          Acrylic yield stress: <b>&asymp;60.5 MPa</b>
+        </div>
+      </div>
+    </section>
+
+    <section class="blk">
+      <p class="bar">The Failure We Found</p>
+      <div class="body">
+        <p class="lede">If the claw was opened too far, the moving jaw could rotate past its meshing range and destabilise the gears against each other, which rendered the claw unusable for the rest of testing. It was not a jam. The teeth walked out of engagement and would not walk back.</p>
+        <p class="lede">The fix was to add hard stoppers alongside the claw so the moving jaw physically cannot travel past the point where the gears stay properly meshed. The lesson generalised further than the part: if a mechanism has a position that matters, something physical should define it rather than the control signal. Software knows where it commanded the mechanism to go, but only geometry knows where it can actually go.</p>
+      </div>
+    </section>
+
+    <section class="blk">
+      <p class="bar">Lessons Learned</p>
+      <div class="body">
+        <p class="lede">Concentrating the motors on the arm paid off. Choosing a stationary arm with a rotating base let us cover the whole arena with only four of the six allowed motors, and it kept the operation simple, because the operator only had to reason about the arm's movements.</p>
+        <p class="lede">Gear size limited arm length, which I did not anticipate going in. Arm segments could not be made arbitrarily long, because higher gear ratios produced gears that were sometimes larger than the arm segment itself and needed extra stabilising brackets to hold each segment in place. That fed directly into the roughly seven inch segment length. It was the first time I remember a design decision being settled by something other than the number I went in expecting.</p>
+        <p class="lede">And simulation was the right risk reduction step under tight material limits. With only two sheets of acrylic, verifying reach, motion and fit in the Fusion arena model before cutting avoided wasting material on a layout that would not have reached the rings or the statue.</p>
+      </div>
+    </section>
+
+    <p class="foot">MAE 3, UC SAN DIEGO.</p>
+  </div>
+
+  <!-- ================= AMANI ================= -->
+  <div class="view" id="v-amani">
+    <div class="phead">
+      <button class="back" data-go="index">&larr; Projects</button>
+      <h2>Amani, an Engineering Memory System</h2>
+      <p class="psub">Personal knowledge system / <b>architecture and benchmarking</b> / 2026 to present</p>
+      <ul class="tags">
+        <li class="tag built">In daily use</li><li class="tag">Retrieval architecture</li>
+        <li class="tag">Controlled benchmarking</li><li class="tag">Python</li>
+        <li class="tag">Systems design</li>
+      </ul>
+    </div>
+
+    <section class="blk">
+      <p class="bar">Introduction</p>
+      <div class="body">
+        <p class="lede">A chat session starts from nothing. You explain the project, and what you actually explain is your current understanding of it, so any error you happen to be holding gets handed back as fact. Then the session ends and it is gone.</p>
+        <p class="lede">On a long project that is a real problem, and I can put a number on it: over the X&ndash;Y positioner work, <b>33 figures changed after first being written down</b>. Dish depth 225 to 326 mm. Focal length 506 to 349. A gearbox ratio 201 to 164. A control bandwidth 13.95 to 13.41 Hz. A counterweight requirement 72 to 91.7 kg-m. Every one was wrong for a while, and a fresh session would hand back whatever I last told it.</p>
+        <p class="lede">So I built a memory layer that reads from a record. Every figure carries where it came from, superseded values stay on the page marked as superseded rather than deleted, and retrieval flags them instead of serving them as current. That flag is the reason the system exists.</p>
+      </div>
+    </section>
+
+    <section class="blk">
+      <p class="bar hot">How It Got Here</p>
+      <div class="body">
+        <p class="lede">Ten weeks, 378 logged sessions, about a dozen structural rewrites. Almost every upgrade came from measuring something rather than believing it, and several came from being told I was wrong.</p>
+
+        <div class="dec">
+          <div class="dq">Build order<span class="st b">Still on phase 0</span></div>
+          <div class="dbody">
+            <p>The design was a four phase TypeScript CLI with its own API key. I shipped <span class="chose">a thin phase zero first</span>, inside a tool I already paid for, with an explicit trigger for starting phase one. I never crossed it. Phase zero kept being enough, and the four phases I did not build are four months I did not spend.</p>
+          </div>
+          <div class="dfig">4 PHASES DESIGNED<br><b>1</b> BUILT<br>TRIGGER NEVER FIRED</div>
+        </div>
+
+        <div class="dec">
+          <div class="dq">Error record first</div>
+          <div class="dbody">
+            <p>On day two I added an append only lessons file, read at the start of every session. When I later measured the boot cost that file was the single largest always on read, and the obvious move was to compress it. I was talked out of it, correctly: most of those rules are not procedure, they are specific mistakes not to repeat, and skipping the one that catches the next mistake is not worth the bytes.</p>
+          </div>
+          <div class="dfig"><b>35</b> RULES<br>ONE PER MISTAKE<br>APPEND-ONLY</div>
+        </div>
+
+        <div class="dec">
+          <div class="dq">Identity<span class="st c">Built, not declared</span></div>
+          <div class="dbody">
+            <p>Before writing a personality I read how they are actually formed. Identity is shown rather than listed, and worked examples beat rules, so I <span class="chose">curated exemplars and derived the character</span> instead of <span class="rej">writing a description</span>.</p>
+            <p>Two of my own drafts were refused as false, which I did not expect. A line saying it never makes mistakes could not stand next to a file documenting them, and a line about never looking ignorant was refused for creating an incentive to bluff. A system that will not let you write a flattering untruth about itself is more useful than one that will.</p>
+          </div>
+          <div class="dfig">12 EXEMPLARS &rarr; 10 KEPT<br><b>2</b> DRAFTS REFUSED<br>AS UNTRUE</div>
+        </div>
+
+        <div class="dec">
+          <div class="dq">Boot cost</div>
+          <div class="dbody">
+            <p>Everything identity related loaded on every run whether the question needed it or not. Split into <span class="chose">a one screen kernel as the only always on read</span>, with the dossier and page catalogue loading on triggers. The trigger table is the important half, since a lean boot producing a shallow answer is worse than a heavy one.</p>
+          </div>
+          <div class="dfig"><b>753 &rarr; 136</b> LINES<br><b>82%</b> LIGHTER BOOT</div>
+        </div>
+
+        <div class="dec">
+          <div class="dq">Adversarial review<span class="st c">Patched, not installed</span></div>
+          <div class="dbody">
+            <p>I brought in an off the shelf multi advisor review tool and <span class="rej">did not install it as shipped</span>. Reading it first turned up a design fault: it built one enriched context and sent it to all five advisors, including the one whose entire job is to have no context, so the seat most likely to catch what everyone else assumed was disabled by the framing.</p>
+            <p>Rebuilt so advisors read the real files, tag every claim as grounded, inferred or assumed, then cross examine and answer in a fixed structure: conceded, held, revised. The concessions are the product, so a run where nobody concedes is logged as failed rather than as consensus. The first real run returned a verdict against a proposal of mine.</p>
+          </div>
+          <div class="dfig">5 ADVISORS<br>EVIDENCE-TAGGED CLAIMS<br>ZERO CONCESSIONS<br>= FAILED RUN</div>
+        </div>
+
+        <div class="dec">
+          <div class="dq">The canary<span class="st c">Replaced same day</span></div>
+          <div class="dbody">
+            <p>I wanted a cheap tripwire for context degradation, so every message opens with a fixed greeting. Built it, <span class="rej">replaced it hours later</span>. A static greeting is a habit that costs no context to produce, so it would have kept working long after real degradation set in, and a canary has to be more fragile than what it protects.</p>
+            <p>Adding a message counter fixed it, because knowing you are on message seven requires holding state, which is the thing that degrades. Greeting catches instruction drift, counter catches state loss, one token, no tool calls.</p>
+          </div>
+          <div class="dfig">GREETING = DRIFT<br>COUNTER = STATE LOSS<br>CANARY MUST BE<br>MORE FRAGILE</div>
+        </div>
+
+        <div class="dec">
+          <div class="dq">Delegation<span class="st c">Rebuilt once</span></div>
+          <div class="dbody">
+            <p>V1 moved <span class="rej">writing</span> to a cheaper executor and kept the reading, spending two reads to save one write. The better diagnosis was not token accounting though: the design cast the executor as a transcriber, told to type rather than decide, and that framing produced its only real failure. An instruction to copy a value verbatim forbade the judgement that would have caught eleven stale file paths, which were reproduced perfectly.</p>
+            <p>Rebuilt around <span class="chose">a brief rather than a specification</span>: say what a field is for, not what keystrokes to type, and give the executor standing to escalate. On the next run it refused to invent a value that had no truthful answer and reported it instead.</p>
+          </div>
+          <div class="dfig">V1: 2 READS<br>TO SAVE 1 WRITE<br>V2: BRIEF, NOT SPEC<br>EXECUTOR REFUSED &rarr; CORRECT</div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="blk">
+      <p class="bar hot">Benchmarking the Memory</p>
+      <div class="body">
+        <p class="lede">The open question was whether the system should become a typed knowledge graph, with atoms, typed edges and multi hop traversal, or stay closer to plain prose retrieval. Rather than argue about it I built five architectures and measured them.</p>
+        <p class="lede">The method matters more than the result. Thirty questions were generated blind from the source essays by an agent that never saw the engine, the rubrics were frozen before any arm ran, answering and grading were both blind, and all five arms routed through the identical 136 atom index so the only variable is what each does after routing.</p>
+        <div class="scroller">
+          <table class="spec"><tbody>
+            <tr><th>Arm and behaviour after routing</th><td><b>Accuracy</b> &nbsp; / &nbsp; <b>Tokens per question</b></td></tr>
+            <tr><th>Reads the whole matched page</th><td>0.82 &nbsp; / &nbsp; 10,648</td></tr>
+            <tr><th>One best section per page</th><td><b>0.87</b> &nbsp; / &nbsp; <b>2,580</b></td></tr>
+            <tr><th>Two best sections per page</th><td>0.78 &nbsp; / &nbsp; 4,153</td></tr>
+            <tr><th>Typed traversal with a section lens</th><td>0.80 &nbsp; / &nbsp; 2,536</td></tr>
+            <tr><th>Two sections plus typed paths, two hops</th><td>0.76 &nbsp; / &nbsp; 5,275</td></tr>
+          </tbody></table>
+        </div>
+        <p class="lede">The simplest arm won on both axes at once, at 4.1 times cheaper than reading whole pages and no worse on answers. The ordering is monotonic and it is the opposite of what I expected going in. Precision beat volume and volume beat structure, and every single thing I added moved accuracy down and cost up.</p>
+        <p class="lede">Three isolations back that up. Typed edges against simply reading more prose lost 0.02 accuracy at 1.27 times the tokens. Two sections instead of one lost 0.09 at 1.61 times, because the second best section dilutes rather than informs. Atom routed traversal against plain section search lost 0.07.</p>
+
+        <h3 class="sub">Why traversal lost</h3>
+        <p class="lede">Traversal was not broken. It fired correctly on all thirty questions and produced valid chains. It lost because plain section search reached two or more documents on all eight multi hop questions without using a single edge. A well posed question already contains the hop: ask why a given wind torque undermines a given motor and both ends are named, so ordinary search lands on both sections and traversal spends its budget re-deriving a link the question already made. You only need to follow a link when you cannot name the destination.</p>
+        <p class="lede">The atoms turned out not to be valuable as graph nodes but as an index. With 18 hand written atoms the graph scored 0.39; with 136 auto generated ones it scored 0.80, and every other arm improved too, purely because routing got better. Index quality lifted all five architectures and edges lifted none.</p>
+      </div>
+    </section>
+
+    <section class="blk">
+      <p class="bar">What I Removed</p>
+      <div class="body">
+        <h3 class="sub">The consolidation feature</h3>
+        <p class="lede">The last justification for typed edges was consolidation: finding rot nobody thought to query, such as a live conclusion resting on a retracted figure. I built it and tested it on the real vault. At full scale it returned 705 findings that were almost entirely extraction artifacts. Focused on 30 correction dense pages it recovered 33 genuine superseded pairs and 4 real contradictions, but still found nothing new, because both contradictions were already written explicitly in the prose it had just read and the flagship capability fired zero times.</p>
+        <p class="lede">The structural reason is the useful part. This vault records what changed in detail and which claim rests on which figure almost never, so a stale dependency is undetectable without dependency structure. Consolidation re-surfaces documented rot rather than discovering hidden rot, so I removed it. The edges survive only as the staleness flag.</p>
+
+        <h3 class="sub">Three earlier versions of the benchmark</h3>
+        <p class="lede">Before it stabilised, this benchmark gave three different answers. Auditing found why each one was wrong: keyword based grading that manufactured both a false win and a false loss, a strawman comparator that dumped whole files, baselines routed through a sparse index while the graph got a rich one, and a section lens that pasted the same text once per atom, wasting 21 percent of one arm's token budget.</p>
+        <p class="lede">The result only stabilised once every arm shared identical routing. A comparison is only measuring what you think it is measuring when the arms differ in exactly one thing, and it took three rebuilds to actually achieve that.</p>
+      </div>
+    </section>
+
+    <section class="blk">
+      <p class="bar">The Personal Layer</p>
+      <div class="body">
+        <p class="lede">The system has a personal layer as well as an engineering one, and the architecture above is applied to the engineering layer only, by design. Two independent reasons, either sufficient. Privacy: that layer never leaves the machine, so it is never decomposed by a delegated process. And narrative integrity: knowledge decomposes into claims and reflection does not, so a journal entry read back as a fragment loses the thread that was the actual content.</p>
+        <p class="lede">It would have been easy to apply one architecture everywhere and call it consistent. Drawing the line deliberately, and writing down why, is the better answer.</p>
+      </div>
+    </section>
+
+    <section class="blk">
+      <p class="bar">Current Status</p>
+      <div class="body">
+        <p class="lede">The system is in daily use. It holds 249 pages across concepts, entities and sources, 1,189 atoms and 378 logged sessions. It is the system holding the X&ndash;Y positioner project, and it wrote most of the source material behind this portfolio.</p>
+        <p class="lede">A session was loading roughly 17,700 tokens before it started thinking, up to 43,100 on a full load. Procedural and episodic memory are now split, with standing rules compiled into one 6.6 KB always on file and the incident case files loaded only when writing a new rule.</p>
+        <p class="lede">On accuracy I want to be careful. The sample is 30 questions on one corpus, so the per category cells hold seven or eight each and 0.87 against 0.82 sits inside the noise. The claim I will defend is much cheaper and certainly no worse, not smarter. The cost result is large, consistent across all four categories, and the part I trust.</p>
+      </div>
+    </section>
+
+    <p class="foot">ALL FIGURES ARE MEASURED FROM THE RUNNING SYSTEM. NO CONTENT FROM THE PERSONAL LAYER APPEARS ANYWHERE ON THIS PAGE OR IN ANY DELEGATED PROCESS.</p>
+  </div>
+
+  </main>
+</div>
+</div>
+
+<script>
+(function(){
+  var ids = ['index','xy','robotx','car','arm','amani'], views = {};
+  ids.forEach(function(id){ views[id] = document.getElementById('v-'+id); });
+  var navButtons = [].slice.call(document.querySelectorAll('#nav button'));
+
+  function show(id, push){
+    if(!views[id]) id = 'index';
+    ids.forEach(function(k){ views[k].classList.toggle('on', k === id); });
+    navButtons.forEach(function(b){
+      b.setAttribute('aria-current', b.getAttribute('data-go') === id ? 'true' : 'false');
+    });
+    if(push && location.hash !== '#'+id){ history.pushState({v:id}, '', '#'+id); }
+    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({top:0, behavior: reduce ? 'auto' : 'smooth'});
+    var h = views[id].querySelector('h1,h2');
+    if(h){ h.setAttribute('tabindex','-1'); h.focus({preventScroll:true}); }
+  }
+
+  [].slice.call(document.querySelectorAll('[data-go]')).forEach(function(b){
+    b.addEventListener('click', function(){ show(b.getAttribute('data-go'), true); });
+  });
+  window.addEventListener('popstate', function(){ show((location.hash||'#index').slice(1), false); });
+  show((location.hash||'#index').slice(1), false);
+})();
+</script>
+</body>
+</html>
