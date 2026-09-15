@@ -61,7 +61,7 @@ p{margin:0}
 .rail nav{display:flex;flex-direction:column}
 .rail nav button{font-family:var(--mono);font-size:.715rem;line-height:1.4;text-align:left;background:var(--block);color:var(--ink);border:2px solid var(--rule);border-bottom-width:0;padding:.55rem .5rem;margin:0;cursor:pointer;display:flex;gap:.5rem;align-items:baseline}
 .rail nav button:last-of-type{border-bottom-width:2px}
-.rail nav button:hover{background:var(--hot);color:var(--hot-ink)}
+.rail nav button:hover{background:var(--block);box-shadow:inset .3rem 0 0 var(--hot)}
 .rail nav button[aria-current="true"]{background:var(--ink);color:var(--paper)}
 .rail nav .n{font-weight:700;flex:0 0 auto}
 .rail-foot{margin-top:1.4rem;border-top:2px solid var(--rule);padding-top:.8rem;font-size:.655rem;line-height:1.85;color:var(--muted)}
@@ -129,6 +129,8 @@ h3.sub{font-family:var(--mono);font-size:.79rem;font-weight:700;letter-spacing:.
 .evo-img{margin:0;aspect-ratio:4/3;max-width:100%;display:flex;align-items:center;justify-content:center;text-align:center;padding:.6rem;border-bottom:2px solid var(--rule);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);background:repeating-linear-gradient(45deg,transparent 0 9px,rgba(127,127,127,.14) 9px 10px)}
 @media(min-width:56rem){.evo-img{border-bottom:0;border-right:2px solid var(--rule);aspect-ratio:auto;min-height:12rem}}
 .evo-img img{width:100%;height:100%;object-fit:cover;display:block}
+.evo-list.noimg .evo-img{display:none}
+@media(min-width:56rem){.evo-list.noimg .evo{grid-template-columns:7.5rem minmax(0,1fr)}}
 .evo-body{padding:.65rem .75rem;display:flex;flex-direction:column;gap:.5rem}
 .evo-body p{font-size:.855rem;line-height:1.72;color:var(--ink-2);max-width:60ch}
 .evo-body .evo-t{font-family:var(--display);text-transform:uppercase;font-size:1rem;line-height:1.1;letter-spacing:-.01em;color:var(--ink)}
@@ -153,6 +155,8 @@ h3.sub{font-family:var(--mono);font-size:.79rem;font-weight:700;letter-spacing:.
 .pmeta{font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.55rem}
 .pdesc{font-size:.875rem;line-height:1.72;color:var(--ink-2);max-width:60ch}
 .pgo{margin-top:.7rem;font-size:.65rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--hot)}
+.pstat{display:block;width:fit-content;margin:0 0 .5rem;padding:.1rem .42rem;font-size:.58rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--muted)}
+.pstat.b{background:var(--hot);color:var(--hot-ink);box-shadow:none}
 .pfig{border:2px solid var(--rule);padding:.5rem .6rem;font-size:.7rem;line-height:1.62;font-variant-numeric:tabular-nums;background:var(--block)}
 @media(max-width:51.99rem){.pfig{margin-top:.3rem}}
 
@@ -230,6 +234,7 @@ img{max-width:100%}
       <button class="pitem" data-go="xy">
         <span class="pnum">01</span>
         <span>
+          <span class="pstat">CAD and analysis</span>
           <span class="pt">X&ndash;Y Satellite Antenna Positioner</span>
           <span class="pmeta">1.35 m Ka-band pedestal / sole mechanism designer / 2026</span>
           <span class="pdesc">A two-axis mount that carries a 1.35 m dish and has to hold it within a tenth of a degree while the wind pushes on it. No error allocation had been issued for the mechanism, so the first thing I had to produce was that allocation.</span>
@@ -241,6 +246,7 @@ img{max-width:100%}
       <button class="pitem" data-go="robotx">
         <span class="pnum">02</span>
         <span>
+          <span class="pstat b">Hardware built</span>
           <span class="pt">Maritime RobotX Challenge 2026</span>
           <span class="pmeta">Team Inspiration / mechanical + autonomy / June to August 2026</span>
           <span class="pdesc">Subsystems for an unmanned surface vessel and its UAV, each designed against a published international specification, plus a bodyboard test vessel for bringing up the autonomy stack.</span>
@@ -252,6 +258,7 @@ img{max-width:100%}
       <button class="pitem" data-go="car">
         <span class="pnum">03</span>
         <span>
+          <span class="pstat b">Built and driven</span>
           <span class="pt">Autonomous Racing Vehicle</span>
           <span class="pmeta">MAE 148 / mechanical design and autonomy / team of four</span>
           <span class="pdesc">A 1/10-scale car that had to see a track, find the line and lap it on its own. I designed every mount that holds the electronics to the chassis, then took the car through the ROS2 stack until it drove the track and kept driving.</span>
@@ -263,6 +270,7 @@ img{max-width:100%}
       <button class="pitem" data-go="arm">
         <span class="pnum">04</span>
         <span>
+          <span class="pstat b">Built</span>
           <span class="pt">Ring-Stacking Robotic Arm</span>
           <span class="pmeta">MAE 3 / team lead / claw subsystem and full-arm CAD</span>
           <span class="pdesc">A stationary arm built to pick rings and place them on a central statue, under a hard limit of six motors and two sheets of acrylic. Gear size and arm length turned out to limit each other, which I didn't expect.</span>
@@ -274,6 +282,7 @@ img{max-width:100%}
       <button class="pitem" data-go="amani">
         <span class="pnum">05</span>
         <span>
+          <span class="pstat">Software, in daily use</span>
           <span class="pt">Amani, an Engineering Memory System</span>
           <span class="pmeta">Personal knowledge system / architecture and benchmarking / 2026</span>
           <span class="pdesc">A memory layer for my own engineering work, so a figure I corrected six weeks ago does not come back to me as fact. Ten weeks of rewrites, most settled by measurement, including five retrieval architectures benchmarked blind against each other.</span>
@@ -331,7 +340,7 @@ img{max-width:100%}
       <p class="bar hot">How the Design Got Here</p>
       <div class="body">
         <p class="lede">Four versions, and each change came from learning something the version before it had not accounted for. Read top to bottom, it is mostly the story of one dimension, the distance between the two axes, getting smaller for reasons that were not the ones I started with.</p>
-        <div class="evo-list">
+        <div class="evo-list noimg">
 
           <div class="evo">
             <div class="evo-n"><span>01</span>August</div>
@@ -1022,7 +1031,7 @@ img{max-width:100%}
     <section class="blk">
       <p class="bar">Current Status</p>
       <div class="body">
-        <p class="lede">The system is in daily use. It holds 249 pages across concepts, entities and sources, 1,189 atoms and 378 logged sessions. It is the system holding the X&ndash;Y positioner project, and it wrote most of the source material behind this portfolio.</p>
+        <p class="lede">The system is in daily use. It holds 249 pages across concepts, entities and sources, 1,189 atoms and 378 logged sessions. It holds the X&ndash;Y positioner record that most of this portfolio draws on.</p>
         <p class="lede">A session was loading roughly 17,700 tokens before it started thinking, up to 43,100 on a full load. Procedural and episodic memory are now split, with standing rules compiled into one 6.6 KB always-on file and the incident case files loaded only when writing a new rule.</p>
         <p class="lede">On accuracy I want to be careful. The sample is 30 questions on one corpus, so the per category cells hold seven or eight each and 0.87 against 0.82 sits inside the noise. The claim I will defend is much cheaper and certainly no worse, not smarter. The cost result is large, consistent across all four categories, and the part I trust.</p>
       </div>
