@@ -426,6 +426,14 @@ img{max-width:100%}
         <p class="lede">I built the payload mass model in Fusion 360 and checked the CG two independent ways rather than trusting one: a direct mass weighted summation over the bodies, then a back derivation from the assembly inertia tensor by parallel axis. They agree to half a millimetre.</p>
         <p class="lede">That check found what earlier calculations had missed. Every previous balance calculation was one dimensional, justified by left to right symmetry, but symmetry only constrains one transverse axis and nobody had checked the other. A heavy component off the centreline breaks it, giving a 20.2 mm offset. The balance point also turned out far more sensitive to geometry than mass: feed and OMT mass across its range moves the axis about 8 mm, while swapping the optics moves it around 182 mm. That factor of twenty reversed which question I asked the programme first.</p>
         <p class="lede">The payload has changed once since. I replaced the backing ring with my own design and the payload dropped 4.83 kg. The old one was budgeted at 9 kg and mine weighs 4.2, so the drop matches to 0.03 kg and nothing else in the model moved.</p>
+        <p class="lede">In September the CAD gave up its first full mass properties, and I had them audited twice, once on the physics and once on the arithmetic. Every inertia in the control analysis had been an estimate; they now come out of the model. Inertia about the upper axis is 11.7 kg-m squared. The lower axis is not a single number but a range, 9 to 33 kg-m squared, because it depends on where the upper axis is pointing. The audits confirmed 183 of 186 values and caught four mistakes, all of them in what I had concluded rather than in the arithmetic, and each one is marked in the sheet.</p>
+        <p class="lede">The same exports settled how the machine has to be balanced. With no counterweight, gravity alone loads the lower gearbox to 130 percent of its rating with the dish at the horizon, so counterweights are not optional. The upper axis has to be balanced first: as the dish swings, the lower-axis imbalance changes by a factor of eight, so a counterweight sized for one pose leaves the drive badly loaded at another. It comes to something over 100 kg of counterweight, which is a cost worth stating plainly rather than hiding in an arm length.</p>
+        <div class="data"><span class="cap">Mass properties, from CAD, audited twice</span>
+          Inertia about the upper axis: <b>11.7 kg-m&sup2;</b><br>
+          Inertia about the lower axis: <b>9 to 33 kg-m&sup2;</b> (depends on pose)<br>
+          Gravity load on the lower gearbox, no counterweight: <b>130%</b> of rating<br>
+          Audit: <b>183 of 186</b> values confirmed, 4 conclusions corrected
+        </div>
       </div>
     </section>
 
@@ -490,8 +498,9 @@ img{max-width:100%}
       <div class="body">
         <p class="lede">The acceptance test is the first mode that tips the dish, not the first mode anywhere. A lug or panel ringing on its own does not move the beam. The target is a control convention, about three times the upper-axis velocity loop, which puts it between roughly 60 and 80 Hz depending on how the upper axis is counterweighted.</p>
         <p class="lede">The first grounded run of the whole load path put that mode at 20 Hz, three to four times short. I stiffened the fork over several iterations to 73 Hz. At 60 Hz, a diagnostic run with the base clamped showed about 87 percent of the remaining compliance sat in the legs and top, which told me where the next change belonged.</p>
-        <p class="lede">The gearbox is also a spring, and its torsional stiffness sits in series with the fork. By 73 Hz it had become the softer of the two, so the system mode is set mostly by the drive, and further stiffening of the fork buys about one hertz. The real inertia can only push the drive mode lower, so the conclusion holds while the number waits on the new mass properties.</p>
+        <p class="lede">The gearbox is also a spring, and its torsional stiffness sits in series with the fork. By 73 Hz it had become the softer of the two, so the system mode is set mostly by the drive, and further stiffening of the fork buys about one hertz. The measured inertia has since landed and only confirmed it: the drive-twist mode sits near 30 Hz on the lower axis and below 40 on the upper, and near the balanced load it is softer still, because the gearbox loses most of its stiffness inside its own lost-motion band.</p>
         <p class="lede">73 Hz is also a ceiling. The model bonds every contact, which makes bolted corners perfectly rigid, and the gearbox compliance is not in the FEA at all.</p>
+        <p class="lede">That the soft spring sits between the motor and the output encoder points to a two-loop answer I am still evaluating. A fast velocity loop on an encoder at the motor makes the gearbox spring collocated for the loop that has to be fast, while the slow, accurate loop stays on the output encoder so gearbox lost motion never leaves the controller's view. The motor already carries the encoder that first loop would need.</p>
         <div class="data"><span class="cap">Fork first mode, by iteration</span>
           First grounded run: <b>20 Hz</b><br>
           After fork changes: <b>44 &rarr; 60 &rarr; 73 Hz</b><br>
@@ -518,7 +527,7 @@ img{max-width:100%}
     <section class="blk">
       <p class="bar">Current Status</p>
       <div class="body">
-        <p class="lede">Nothing is fabricated and there is no test data. The machine was redesigned in September around the smaller axis offset. The drivetrain and structural figures above use that build's measured geometry; the error budget and the original mass model predate it. Still open: mass properties for the new build, which set both axis inertias and every bandwidth figure downstream; the drive, which needs a larger motor and an outdoor rating the current gearbox's catalogue explicitly excludes; and the counterweights, which are not yet drawn.</p>
+        <p class="lede">Nothing is fabricated and there is no test data. The machine was redesigned in September around the smaller axis offset, and the mass properties for that build have now come out of CAD and been audited, which is what let me quote the inertias and the balance figures above with a straight face. Still open: the counterweights, over 100 kg of them and not yet drawn; the drive, which needs a larger motor and an outdoor rating the current gearbox's catalogue excludes; and the encoder arrangement that decides how much of the gearbox the controller can actually see.</p>
         <p class="lede">A configuration audit also found most analysis parameters were inert, set in the config and read by nothing. A parameter nothing reads still looks set, so it gives a silent wrong answer.</p>
       </div>
     </section>
