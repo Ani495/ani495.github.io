@@ -181,6 +181,17 @@ h3.sub{font-family:var(--mono);font-size:.79rem;font-weight:700;letter-spacing:.
 button:focus-visible,a:focus-visible{outline:3px solid var(--hot);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 img{max-width:100%}
+
+/* photos and figures */
+.shot{margin:1rem 0 0;border:2px solid var(--rule);background:var(--block);overflow:hidden;max-width:52rem}
+.shot img{display:block;width:100%;height:auto}
+.shot figcaption{font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:.42rem .6rem;border-top:2px solid var(--rule);line-height:1.5}
+.phead .shot{margin-top:1.1rem}
+.shot.wide{max-width:60rem}
+.video{margin:1rem 0 0;border:2px solid var(--rule);background:#000;max-width:52rem}
+.video .frame{position:relative;aspect-ratio:16/9}
+.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+.video figcaption{font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:.42rem .6rem;border-top:2px solid var(--rule);background:var(--block);line-height:1.5}
 </style>
 </head>
 <body>
@@ -314,6 +325,10 @@ img{max-width:100%}
         <li class="tag">Error budgeting</li><li class="tag">Drivetrain sizing</li>
         <li class="tag">Modal FEA</li><li class="tag">Trade studies</li><li class="tag">Supplier engagement</li>
       </ul>
+      <figure class="shot">
+        <img src="img/xy-current.jpg" alt="CAD render of the current X-Y positioner: a gold parabolic dish on a fork that straddles the upper drive." width="1100" height="858">
+        <figcaption>The current design. The fork straddles the upper drive; the axis offset is 250 mm.</figcaption>
+      </figure>
     </div>
 
     <section class="blk">
@@ -341,11 +356,11 @@ img{max-width:100%}
       <p class="bar hot">How the Design Got Here</p>
       <div class="body">
         <p class="lede">Four versions, and each change came from learning something the version before it had not accounted for. Read top to bottom, it is mostly the story of one dimension, the distance between the two axes, getting smaller for reasons that were not the ones I started with.</p>
-        <div class="evo-list noimg">
+        <div class="evo-list">
 
           <div class="evo">
             <div class="evo-n"><span>01</span>Concept</div>
-            <figure class="evo-img" role="img" aria-label="Early concept, image to come">Image to come<br>Early concept</figure>
+            <figure class="evo-img"><img src="img/xy-concept.jpg" alt="Early CAD concept: a yoke cradling the drive on a plate." loading="lazy"></figure>
             <div class="evo-body">
               <p class="evo-t">First concepts for the support</p>
               <p>I started by getting the two-axis support down as rough concepts, working out how a fork and an axis cradle would carry the dish and where the drives would sit. A fork and yoke, not a ring, because the travel requirement rules out anything that encloses the dish.</p>
@@ -355,7 +370,7 @@ img{max-width:100%}
 
           <div class="evo">
             <div class="evo-n"><span>02</span>Early September</div>
-            <figure class="evo-img" role="img" aria-label="Pedestal version, image to come">Image to come<br>Pedestal version</figure>
+            <figure class="evo-img"><img src="img/xy-pedestal.jpg" alt="Pedestal version: the dish stood off above the fork." loading="lazy"></figure>
             <div class="evo-body">
               <p class="evo-t">Pedestal, 365 mm offset</p>
               <p>With the floor gone the offset came down to 365 mm and the machine got about 430 mm shorter. The upper axis should sit at the payload's centre of mass so the dish balances about it, but that station is where the feed horn lives, so the dish was stood off on a pedestal to clear it.</p>
@@ -365,7 +380,7 @@ img{max-width:100%}
 
           <div class="evo">
             <div class="evo-n"><span>03</span>September 8</div>
-            <figure class="evo-img" role="img" aria-label="Centre of mass version, image to come">Image to come<br>Centre of mass version</figure>
+            <figure class="evo-img"><img src="img/xy-oncg.jpg" alt="Centre-of-mass version: the upper axis brought forward, at a much larger offset." loading="lazy"></figure>
             <div class="evo-body">
               <p class="evo-t">Upper axis on the centre of mass</p>
               <p>The direct fix was to bring the upper axis forward onto the centre of mass, with a cavity in the backing ring so the feed could nest inside it. That balanced the upper axis completely. I built the variants alongside the pedestal and compared them side by side.</p>
@@ -375,7 +390,7 @@ img{max-width:100%}
 
           <div class="evo now">
             <div class="evo-n"><span>04</span>September 10 to now</div>
-            <figure class="evo-img" role="img" aria-label="Current design, image to come">Image to come<br>Current design</figure>
+            <figure class="evo-img"><img src="img/xy-current.jpg" alt="Current design: fork straddling the upper drive, dish on top." loading="lazy"></figure>
             <div class="evo-body">
               <p class="evo-t">Straddled drive, 250 mm offset</p>
               <p>A larger offset was mechanically fine but hurt control. The upper assembly swings about the lower axis on that offset, so every extra millimetre adds inertia, and any imbalance on the upper axis turns lower axis motion into torque on the upper one in proportion to it. A smaller offset keeps the two closer to independent loops and pushes the drive's resonance higher, at the price of inertia that had been rejecting wind for free.</p>
@@ -551,6 +566,10 @@ img{max-width:100%}
         <li class="tag">Design for additive</li><li class="tag">Fluid delivery</li>
         <li class="tag">Vehicle bring-up</li><li class="tag">Embedded</li>
       </ul>
+      <figure class="shot">
+        <img src="img/robotx-beacon.jpg" alt="The built course beacon: an 8 by 8 RGB LED panel and an ESP32 on a printed mount inside an IP-rated enclosure." width="619" height="1100" loading="lazy">
+        <figcaption>The course beacon, built. The 8x8 RGB panel and ESP32 sit on a printed mount inside an IP-rated enclosure.</figcaption>
+      </figure>
     </div>
 
     <section class="blk">
@@ -627,6 +646,15 @@ img{max-width:100%}
     </section>
 
     <section class="blk">
+      <div class="body">
+        <figure class="shot">
+          <img src="img/robotx-nozzle.jpg" alt="CAD render of the converging junction: two feed lines merging into one riser nozzle on a bolted flange." width="1100" height="958" loading="lazy">
+          <figcaption>The converging junction, CAD. Two feed lines merge into one aimed nozzle on a bolted flange.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="blk">
       <p class="bar">What I Would Check First on the Gripper</p>
       <div class="body">
         <p class="lede">It is designed and not built, so I would rather state the weaknesses than have somebody find them.</p>
@@ -654,6 +682,10 @@ img{max-width:100%}
         <li class="tag">ROS2</li><li class="tag">Computer vision</li>
         <li class="tag">CNN</li><li class="tag">PID tuning</li>
       </ul>
+      <figure class="shot">
+        <img src="img/car-track.jpg" alt="Two 1/10-scale autonomous cars beside a test track marked with yellow dashed lines, with a laptop running the stack." width="745" height="1100" loading="lazy">
+        <figcaption>Bring-up on the test track. The car follows the yellow markers; the laptop runs the ROS2 stack.</figcaption>
+      </figure>
     </div>
 
     <section class="blk">
@@ -766,6 +798,10 @@ img{max-width:100%}
         <p class="lede">Earlier in the course we drove the same car with a trained convolutional network instead of a hand built pipeline. That version used roughly 15,000 self collected images, trained on university GPU clusters over a remote session in under ten minutes, and was validated in simulation before it went near the physical car. It demonstrated three autonomous laps publicly at the Del Mar Electronics and Manufacturing Show, in front of industry visitors, on a track it had not seen before that day.</p>
         <p class="lede">The network needed data and the pipeline needed understanding. Collecting fifteen thousand frames takes no knowledge of why the car turns, but every CV pipeline parameter had to be reasoned about, because nothing in it tunes itself. The pipeline also fails legibly, since when lane detection breaks I can watch the mask and know it is a Hue floor or a shadow, while a network driving badly usually means it saw something in training I did not notice.</p>
         <p class="lede">Choosing for a competition tomorrow, I would take the classical pipeline for anything I have to debug trackside under time pressure, and the learned approach for anything whose rules I cannot write down. I can only tell which problem I have because I built both.</p>
+        <figure class="video">
+          <div class="frame"><iframe src="https://www.youtube-nocookie.com/embed/mBpMREkUo0s" title="ROS2 computer-vision laps" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+          <figcaption>The ROS2 computer-vision pipeline driving the car, three laps.</figcaption>
+        </figure>
       </div>
     </section>
 
@@ -788,6 +824,10 @@ img{max-width:100%}
         <li class="tag">Fusion 360</li><li class="tag">AutoCAD</li>
         <li class="tag">Laser cutting</li><li class="tag">Failure analysis</li>
       </ul>
+      <figure class="shot">
+        <img src="img/arm-built.jpg" alt="The built ring-stacking arm: yellow and blue laser-cut acrylic links, large spur gears, DC motors on an aluminium base." width="619" height="1100" loading="lazy">
+        <figcaption>The built arm. Laser-cut acrylic, two gear stages and four motors on an aluminium base.</figcaption>
+      </figure>
     </div>
 
     <section class="blk">
@@ -823,6 +863,10 @@ img{max-width:100%}
         <p class="lede">Each part was modelled individually in Fusion 360 then brought into a single assembly, which made it straightforward to check the gear pairings at each joint and verify the claw mesh sat where it needed to before committing to fabrication.</p>
         <p class="lede">With the assembly complete I placed the arm into a Fusion model of the arena, rings around the perimeter and statue at the centre, to confirm the stationary arm could reach the full layout and that the geometry fit the envelope, all before any material was cut.</p>
         <p class="lede">The full operating cycle came out of this as a four-pose sequence: rotate the base to line up with a ring, rotate toward the statue, extend the lower arm, and finally turn the claw to drop the ring. That sequence is what justified three arm motors plus a dedicated claw motor.</p>
+        <figure class="shot wide">
+          <img src="img/arm-sequence.jpg" alt="Four CAD poses of the arm: rotating to the ring, rotating to the statue, extending the lower arm, and turning the claw to drop." width="1100" height="444" loading="lazy">
+          <figcaption>The four-pose cycle, worked out in CAD before anything was cut.</figcaption>
+        </figure>
       </div>
     </section>
 
