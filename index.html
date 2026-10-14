@@ -241,7 +241,7 @@ img{max-width:100%}
           <span class="pdesc">A two-axis mount that carries a 1.35 m dish and has to hold it within a tenth of a degree while the wind pushes on it. No error allocation had been issued for the mechanism, so the first thing I had to produce was that allocation.</span>
           <span class="pgo">Read &rarr;</span>
         </span>
-        <span class="pfig">0.1&deg; POINTING BUDGET<br>12-ROW RSS ALLOCATION<br>FORK MODE 20 &rarr; 73 Hz</span>
+        <span class="pfig">0.1&deg; POINTING BUDGET<br>12-ROW RSS ALLOCATION<br>FORK MODE 20 &rarr; 82 Hz</span>
       </button>
 
       <button class="pitem" data-go="robotx">
@@ -344,12 +344,12 @@ img{max-width:100%}
         <div class="evo-list noimg">
 
           <div class="evo">
-            <div class="evo-n"><span>01</span>August</div>
-            <figure class="evo-img" role="img" aria-label="First assembly, image to come">Image to come<br>First assembly</figure>
+            <div class="evo-n"><span>01</span>Concept</div>
+            <figure class="evo-img" role="img" aria-label="Early concept, image to come">Image to come<br>Early concept</figure>
             <div class="evo-body">
-              <p class="evo-t">Fork, trunnions, axes 800 mm apart</p>
-              <p>A fork and yoke, chosen over a ring because the travel requirement rules out anything that encloses the dish. Trunnion shafts ran along the upper axis behind the dish, and both axes were supported at both ends. The axes sat 800 mm apart, a figure I had taken as a clearance floor from the dish's own sweep radius.</p>
-              <p class="evo-why"><b>What changed it:</b> I drew the full swept volume in CAD. Nothing interfered at 365 mm, so the floor had never been real.</p>
+              <p class="evo-t">First concepts for the support</p>
+              <p>I started by getting the two-axis support down as rough concepts, working out how a fork and an axis cradle would carry the dish and where the drives would sit. A fork and yoke, not a ring, because the travel requirement rules out anything that encloses the dish.</p>
+              <p class="evo-why"><b>What changed it:</b> early on the two axes sat 800 mm apart, a figure I had taken as a clearance floor from the dish's own sweep radius. I drew the full swept volume in CAD, nothing interfered at 365 mm, and the floor turned out never to have been real.</p>
             </div>
           </div>
 
@@ -377,10 +377,10 @@ img{max-width:100%}
             <div class="evo-n"><span>04</span>September 10 to now</div>
             <figure class="evo-img" role="img" aria-label="Current design, image to come">Image to come<br>Current design</figure>
             <div class="evo-body">
-              <p class="evo-t">No trunnions, 250 mm offset</p>
+              <p class="evo-t">Straddled drive, 250 mm offset</p>
               <p>A larger offset was mechanically fine but hurt control. The upper assembly swings about the lower axis on that offset, so every extra millimetre adds inertia, and any imbalance on the upper axis turns lower axis motion into torque on the upper one in proportion to it. A smaller offset keeps the two closer to independent loops and pushes the drive's resonance higher, at the price of inertia that had been rejecting wind for free.</p>
-              <p>So the redesign went after the offset directly. The trunnion shafts are gone and the fork carries the dish, the lower drive turns a flat plate the upper axis sits on, the backing ring is my own design at 4.2 kg, and the far side of the upper axis floats. The offset is 250 mm. It is not the lever arm the wind acts through, which runs from the lower axis to the dish and still sets the drivetrain load.</p>
-              <p class="evo-why"><b>Still moving:</b> the fork has gone from 20 to 73 Hz, and the mass properties of this build come next.</p>
+              <p>So the redesign went after the offset directly. The fork carries the dish, the lower drive turns a flat plate the upper axis sits on, the backing ring is my own design at 4.2 kg, and the far side of the upper axis floats. The offset is 250 mm. It is not the lever arm the wind acts through, which runs from the lower axis to the dish and still sets the drivetrain load.</p>
+              <p class="evo-why"><b>Still moving:</b> the fork has gone from 20 to 82 Hz, and the mass properties of this build have now been measured and audited.</p>
             </div>
           </div>
 
@@ -497,13 +497,13 @@ img{max-width:100%}
       <p class="bar">Structure and Modes</p>
       <div class="body">
         <p class="lede">The acceptance test is the first mode that tips the dish, not the first mode anywhere. A lug or panel ringing on its own does not move the beam. The target is a control convention, about three times the upper-axis velocity loop, which puts it between roughly 60 and 80 Hz depending on how the upper axis is counterweighted.</p>
-        <p class="lede">The first grounded run of the whole load path put that mode at 20 Hz, three to four times short. I stiffened the fork over several iterations to 73 Hz. At 60 Hz, a diagnostic run with the base clamped showed about 87 percent of the remaining compliance sat in the legs and top, which told me where the next change belonged.</p>
-        <p class="lede">The gearbox is also a spring, and its torsional stiffness sits in series with the fork. By 73 Hz it had become the softer of the two, so the system mode is set mostly by the drive, and further stiffening of the fork buys about one hertz. The measured inertia has since landed and only confirmed it: the drive-twist mode sits near 30 Hz on the lower axis and below 40 on the upper, and near the balanced load it is softer still, because the gearbox loses most of its stiffness inside its own lost-motion band.</p>
-        <p class="lede">73 Hz is also a ceiling. The model bonds every contact, which makes bolted corners perfectly rigid, and the gearbox compliance is not in the FEA at all.</p>
+        <p class="lede">The first grounded run of the whole load path put that mode at 20 Hz, three to four times short. I stiffened the fork over several iterations to 82 Hz. At 60 Hz along the way, a diagnostic run with the base clamped showed about 87 percent of the remaining compliance sat in the legs and top, which told me where the next change belonged.</p>
+        <p class="lede">The gearbox is also a spring, and its torsional stiffness sits in series with the fork. By the low eighties it had become the softer of the two, so the system mode is set mostly by the drive, and further stiffening of the fork buys about one hertz. The measured inertia has since landed and only confirmed it: the drive-twist mode sits near 30 Hz on the lower axis and below 40 on the upper, and near the balanced load it is softer still, because the gearbox loses most of its stiffness inside its own lost-motion band.</p>
+        <p class="lede">82 Hz is also a ceiling. The model bonds every contact, which makes bolted corners perfectly rigid, and the gearbox compliance is not in the FEA at all.</p>
         <p class="lede">That the soft spring sits between the motor and the output encoder points to a two-loop answer I am still evaluating. A fast velocity loop on an encoder at the motor makes the gearbox spring collocated for the loop that has to be fast, while the slow, accurate loop stays on the output encoder so gearbox lost motion never leaves the controller's view. The motor already carries the encoder that first loop would need.</p>
         <div class="data"><span class="cap">Fork first mode, by iteration</span>
           First grounded run: <b>20 Hz</b><br>
-          After fork changes: <b>44 &rarr; 60 &rarr; 73 Hz</b><br>
+          After fork changes: <b>44 &rarr; 60 &rarr; 73 &rarr; 82 Hz</b><br>
           Compliance in legs and top at 60 Hz: <b>~87%</b><br>
           Target: <b>3&times;</b> upper-axis velocity loop, <b>~60&ndash;80 Hz</b>
         </div>
